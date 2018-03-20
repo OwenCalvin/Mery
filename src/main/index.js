@@ -24,7 +24,8 @@ function createWindow () {
     useContentSize: true,
     width: 1000,
     frame: false,
-    transparent: true
+    transparent: true,
+    titleBarStyle: 'customButtonsOnHover'
   })
 
   mainWindow.setIgnoreMouseEvents(true, {forward: true})

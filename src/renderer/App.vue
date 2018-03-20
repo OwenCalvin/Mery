@@ -1,46 +1,15 @@
 <template>
-  <div id="app" @mousemove="setPosition($event)" @mouseout="unHover()" :style="{'-webkit-mask-image': getBackground}">
-    <router-view class="hover-hidden"></router-view>
+  <div id="app">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'see',
-    data: function () {
-      return {
-        posX: 0,
-        posY: 0
-      }
-    },
-    computed: {
-      getBackground: function () {
-        return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent 200px, rgba(255, 255, 255, .5) 0%)`
-      }
-    },
-    methods: {
-      setPosition: function (ev) {
-        this.posX = ev.pageX
-        this.posY = ev.pageY
-      },
-      unHover: function () {
-        console.log('test')
-      }
-    }
+    name: 'see'
   }
 </script>
 
-<style>
-  body {
-    padding: 0;
-    margin: 0;
-  }
-  #app {
-    position: absolute;
-    background: white;
-    -webkit-mask-image: radial-gradient(circle at 100px 30px, white 100%);
-    background-size: 100% 100%;
-    min-height: 100%;
-    width: 100%;
-  }
+<style lang="scss" scoped>
+  @import './styles/main.scss';
 </style>

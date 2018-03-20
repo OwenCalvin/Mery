@@ -1,21 +1,20 @@
 <template>
-  <div id="wrapper">
-    
+  <div id="main-page">
+    <header></header>
+    <Viewer></Viewer>
   </div>
 </template>
 
 <script>
+  import Viewer from './Viewer.vue'
   export default {
     name: 'main-page',
-    components: {},
+    components: { Viewer },
     methods: {}
   }
 </script>
 
-<style>
-  #wrapper {
-    width: 100%;
-    height: 50px;
-    background: blue;
-  }
+<style lang="scss" scoped>
+  @import '../styles/mainpage.scss';
 </style>
+
