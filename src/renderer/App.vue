@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @mousemove="setPosition($event)" @mouseout="unHover()" :style="{background: getBackground}">
+  <div id="app" @mousemove="setPosition($event)" @mouseout="unHover()" :style="{'-webkit-mask-image': getBackground}">
     <router-view class="hover-hidden"></router-view>
   </div>
 </template>
@@ -37,7 +37,8 @@
   }
   #app {
     position: absolute;
-    /*background: radial-gradient(circle at 100px 30px, transparent 20%, white 20%);*/
+    background: white;
+    -webkit-mask-image: radial-gradient(circle at 100px 30px, white 100%);
     background-size: 100% 100%;
     min-height: 100%;
     width: 100%;
