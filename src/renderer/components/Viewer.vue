@@ -1,34 +1,36 @@
 <template>
-  <div id="view" class="mask" @mousemove="setPosition($event)" @mouseleave="unHover" :style="{'-webkit-mask-image': getBackground}">
+  <div class="viewer">
+    <div id="mask" class="mask" :style="{'-webkit-mask-image': getBackground}"></div>
   </div>
 </template>
 
 <script>
-  // import $ from 'jquery'
+  import { screen, remote } from 'electron'
+  const window = remote.getCurrentWindow()
+
   export default {
     name: 'viewer',
     data: function () {
       return {
         hovered: false,
-        posX: 0,
-        posY: 0
+        posX: -200,
+        posY: -200,
+        radius: 200
       }
     },
     computed: {
       getBackground: function () {
-        let radius = this.hovered ? 0 : 0
-        return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent ${radius}px, white 0%)`
+        return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent ${this.radius}px, white 0%)`
       }
     },
-    methods: {
-      setPosition: function (ev) {
-        this.posX = ev.pageX
-        this.posY = ev.pageY
-      },
-      unHover: function () {
-        console.log('unhover')
-        this.hovered = false
-      }
+    mounted: function () {
+      let _this = this
+      setInterval(function () {
+        let bounds = window.getBounds()
+        let mousePos = screen.getCursorScreenPoint()
+        _this.posX = (mousePos.x - bounds.x)
+        _this.posY = (mousePos.y - bounds.y - 50) // 50px is the Header height
+      }, 1)
     }
   }
 </script>

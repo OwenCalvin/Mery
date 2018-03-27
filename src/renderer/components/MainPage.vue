@@ -7,6 +7,7 @@
 
 <script>
   import Viewer from './Viewer.vue'
+
   export default {
     name: 'main-page',
     components: { Viewer },
