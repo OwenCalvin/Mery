@@ -5,7 +5,9 @@
 </template>
 
 <script>
+  import electron from '../scripts/imports/electron'
   import loop, { setMT } from '../scripts/loop'
+  const RADIUS_RATIO = 0.35
 
   export default {
     name: 'viewer',
@@ -15,13 +17,13 @@
       return {
         hovered: false,
         posX: -radius,
-        posY: -radius,
-        radius: radius
+        posY: -radius
       }
     },
     computed: {
       getBackground: function () {
-        return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent ${this.radius}px, white 0%)`
+        let radius = electron.window.getSize()[0] * RADIUS_RATIO
+        return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent ${radius}px, white 0%)`
       }
     },
     mounted: function () {
