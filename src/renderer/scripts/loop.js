@@ -22,7 +22,9 @@ function getStatut (obj) {
   let newX = mousePos.x - bounds.x
   let newY = mousePos.y - bounds.y - marginTop // 50px is the Header height
 
-  setWindow(newY > 0)
+  if (WINDOW.isResizable) {
+    setWindow(newY > 0)
+  }
 
   obj.posX = newX
   obj.posY = newY

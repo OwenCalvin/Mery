@@ -55,10 +55,12 @@
     methods: {
       toggleHead () {
         if (this.head.visible) {
+          Electron.window.setResizable(false)
           this.head.height = 0
           this.head.mb = 0
           this.head.visible = false
         } else {
+          Electron.window.setResizable(true)
           this.head.height = HEIGHT
           this.head.mb = MB
           this.head.visible = true
