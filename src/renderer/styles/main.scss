@@ -5,5 +5,9 @@ body {
 
 #app {
     overflow: hidden;
-    border-radius: 7px;
+}
+
+::selection {
+    background: rgb(50, 50, 50);
+    color: white;
 }

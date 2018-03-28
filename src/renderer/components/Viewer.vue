@@ -5,17 +5,18 @@
 </template>
 
 <script>
-  import { screen, remote } from 'electron'
-  const window = remote.getCurrentWindow()
+  import loop, { setMT } from '../scripts/loop'
 
   export default {
     name: 'viewer',
+    props: ['mt'],
     data: function () {
+      let radius = 200
       return {
         hovered: false,
-        posX: -200,
-        posY: -200,
-        radius: 200
+        posX: -radius,
+        posY: -radius,
+        radius: radius
       }
     },
     computed: {
@@ -24,13 +25,8 @@
       }
     },
     mounted: function () {
-      let _this = this
-      setInterval(function () {
-        let bounds = window.getBounds()
-        let mousePos = screen.getCursorScreenPoint()
-        _this.posX = (mousePos.x - bounds.x)
-        _this.posY = (mousePos.y - bounds.y - 50) // 50px is the Header height
-      }, 1)
+      setMT(this.mt)
+      loop(this)
     }
   }
 </script>

@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, globalShortcut } from 'electron'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -24,7 +24,9 @@ function createWindow () {
     width: 1000,
     frame: false,
     transparent: true,
-    titleBarStyle: 'customButtonsOnHover'
+    titleBarStyle: 'customButtonsOnHover',
+    minWidth: 450,
+    minHeight: 100
   })
 
   mainWindow.setIgnoreMouseEvents(true, {forward: true})
@@ -33,6 +35,10 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  globalShortcut.register('CommandOrControl+Alt+X', () => {
+    mainWindow.webContents.send('key')
   })
 }
 
