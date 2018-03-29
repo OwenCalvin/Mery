@@ -31,7 +31,7 @@ function getStatut (obj) {
     let newX = mousePos.x - bounds.x
     let newY = mousePos.y - bounds.y - marginTop
 
-    if (WINDOW.isResizable()) {
+    if (WINDOW.isResizable) {
       setWindow(newY > 0 && newY < size[1] - 2 * marginTop)
     }
 

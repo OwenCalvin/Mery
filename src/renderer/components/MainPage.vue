@@ -1,6 +1,6 @@
 <template>
   <div class="main-page">
-    <header class="control" v-if="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
+    <header class="control" v-show="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
       <span class="left side">
         <span class="text-white btn fa" :class="{'disable': !controls.canGoBack}" @click="goBack">
           <font-awesome-icon :icon="icons.left"/>
@@ -29,16 +29,16 @@
 
     <Viewer class="viewer" @setControls="setControls" :radius="radius" :opacity="opacity" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight), bottom: getPx(totalHeadHeight)}"></Viewer>
     
-    <footer class="control" v-if="head.visible" :style="{height: getPx(head.height), marginTop: getPx(head.mb)}">
+    <footer class="control" v-show="head.visible" :style="{height: getPx(head.height), marginTop: getPx(head.mb)}">
       <span class="side">
         <span :class="{'active': !head.visible}" class="text-white btn fa" @click="toggleHead">
           <font-awesome-icon :icon="icons.eye"/>
         </span>
-        <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
-          <font-awesome-icon :icon="icons.click"/>
-        </span>
         <span :class="{'active': top}" class="text-white btn fa" @click="toggleTop">
           <font-awesome-icon :icon="icons.windows"/>
+        </span>
+        <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
+          <font-awesome-icon :icon="icons.click"/>
         </span>
       </span>
 
@@ -105,17 +105,10 @@
     },
     methods: {
       toggleHead () {
-        if (this.head.visible) {
-          electron.window.setResizable(false)
-          this.head.height = 0
-          this.head.mb = 0
-          this.head.visible = false
-        } else {
-          electron.window.setResizable(true)
-          this.head.height = HEIGHT
-          this.head.mb = MB
-          this.head.visible = true
-        }
+        electron.window.setResizable(this.head.visible)
+        this.head.height = this.head.visible ? 0 : HEIGHT
+        this.head.mb = this.head.visible ? 0 : MB
+        this.head.visible = !this.head.visible
       },
       toggleClick () {
         this.clickable = !this.clickable
