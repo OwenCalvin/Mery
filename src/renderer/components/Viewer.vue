@@ -1,7 +1,7 @@
 <template>
   <div class="viewer">
     <div id="mask" class="mask" :style="{'-webkit-mask-image': getBackground}">
-      <webview class="web" :src="'http://' + url" autosize="on" allowtransparency></webview>
+      <webview class="web" :src="'http://' + url" autosize allowtransparency></webview>
     </div>
   </div>
 </template>
@@ -31,7 +31,16 @@
       clickable () { setClick(this.clickable) },
       mt () { setMT(this.mt) }
     },
-    mounted: function () { loop(this) }
+    mounted: function () {
+      const WEBVIEW = document.querySelector('webview')
+      WEBVIEW.addEventListener('dom-ready', () => {
+        this.$parent.$on('back', () => { WEBVIEW.goBack() })
+        this.$parent.$on('front', () => { WEBVIEW.goForward() })
+        // webview.openDevTools()
+      })
+
+      loop(this)
+    }
   }
 </script>
 

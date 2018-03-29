@@ -28,12 +28,13 @@ function getStatut (obj) {
     }
     let bounds = WINDOW.getBounds()
     let mousePos = SCREEN.getCursorScreenPoint()
+    let size = WINDOW.getSize()
 
     let newX = mousePos.x - bounds.x
     let newY = mousePos.y - bounds.y - marginTop
 
     if (WINDOW.isResizable) {
-      setWindow(newY > 0)
+      setWindow(newY > 0 && newY < size[0] - marginTop)
     }
 
     obj.posX = newX

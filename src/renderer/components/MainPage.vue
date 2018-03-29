@@ -1,12 +1,12 @@
 <template>
   <div class="main-page">
-    <header class="header" v-if="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
+    <header class="control" v-if="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
       <span class="left side">
-        <span :class="{'active': !head.visible}" class="text-white btn fa" @click="toggleHead">
-          <font-awesome-icon :icon="icons.eyeSlash"/>
+        <span class="text-white btn fa" @click="goBack">
+          <font-awesome-icon :icon="icons.left"/>
         </span>
-        <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
-          <font-awesome-icon :icon="icons.click"/>
+        <span class="text-white btn fa" @click="goFront">
+          <font-awesome-icon :icon="icons.right"/>
         </span>
       </span>
       <span class="drag"></span>
@@ -28,7 +28,19 @@
         </span>
       </span>
     </header>
-    <Viewer class="viewer" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight)}"></Viewer>
+    <Viewer class="viewer" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight), bottom: getPx(totalHeadHeight)}"></Viewer>
+    <footer class="control" :style="{height: getPx(head.height), marginTop: getPx(head.mb)}">
+      <span class="side">
+        <span :class="{'active': !head.visible}" class="text-white btn fa" @click="toggleHead">
+          <font-awesome-icon :icon="icons.eyeSlash"/>
+        </span>
+        <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
+          <font-awesome-icon :icon="icons.click"/>
+        </span>
+      </span>
+      <span class="drag"></span>
+      <span class="side"></span>
+    </footer>
   </div>
 </template>
 
@@ -80,8 +92,10 @@
       },
       getPx (val) { return val + 'px' },
       closeWindow () { Electron.window.close() },
-      minimizeWindow () { Electron.window.minimize() }
+      minimizeWindow () { Electron.window.minimize() },
       // maximizeWindow () { Electron.window.maximize() }
+      goBack () { this.$emit('back') },
+      goFront () { this.$emit('front') }
     },
     computed: {
       totalHeadHeight () { return this.head.height + this.head.mb }
