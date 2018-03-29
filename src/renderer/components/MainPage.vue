@@ -45,7 +45,7 @@
       <span class="drag"></span>
       
       <span class="side">
-        <vue-slider ref="slider" v-model="radius" :min="50" :max="350" :interval="1" :tooltip="false" width="100%"></vue-slider>
+        <vue-slider ref="slider" v-model="radius" :min="0" :max="350" :interval="1" :tooltip="false" width="100%"></vue-slider>
         <span class="text-white fa">
           <font-awesome-icon :icon="icons.dot"/>
         </span>
