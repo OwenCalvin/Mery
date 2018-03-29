@@ -2,7 +2,7 @@
   <div class="main-page">
     <header class="header" v-if="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
       <span class="left side">
-        <span :class="{'active': head.visible}" class="text-white btn fa" @click="toggleHead">
+        <span :class="{'active': !head.visible}" class="text-white btn fa" @click="toggleHead">
           <font-awesome-icon :icon="icons.eyeSlash"/>
         </span>
         <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
