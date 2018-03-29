@@ -1,6 +1,6 @@
 # See
 
-A floating browser:
+A floating browser
 
  ## Shortcuts (CTRL = CMD on Mac):  
  CTRL + ALT + X : Enable/Disable controls  
