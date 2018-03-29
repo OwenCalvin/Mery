@@ -11,11 +11,13 @@ import Left from '@fortawesome/fontawesome-free-solid/faArrowLeft'
 import Reload from '@fortawesome/fontawesome-free-solid/faSync'
 import Dot from '@fortawesome/fontawesome-free-solid/faDotCircle'
 import Opacity from '@fortawesome/fontawesome-free-solid/faAdjust'
+import Windows from '@fortawesome/fontawesome-free-solid/faWindowRestore'
 
 export default {
   eyeSlash: EyeSlash,
   eye: Eye,
   dot: Dot,
+  windows: Windows,
   opacity: Opacity,
   click: Click,
   right: Right,

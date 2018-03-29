@@ -37,6 +37,9 @@
         <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
           <font-awesome-icon :icon="icons.click"/>
         </span>
+        <span :class="{'active': top}" class="text-white btn fa" @click="toggleTop">
+          <font-awesome-icon :icon="icons.windows"/>
+        </span>
       </span>
 
       <span class="drag"></span>
@@ -85,6 +88,7 @@
           canGoBack: false,
           canGoFront: false
         },
+        top: true,
         clickable: true,
         link: {
           text: LINK,
@@ -125,6 +129,10 @@
       setControls (val) {
         this.controls.canGoBack = val.back
         this.controls.canGoFront = val.front
+      },
+      toggleTop () {
+        this.top = !this.top
+        electron.window.setAlwaysOnTop(this.top)
       }
     },
     computed: {
