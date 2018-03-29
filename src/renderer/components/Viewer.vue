@@ -10,6 +10,7 @@
   import electron from '../scripts/imports/electron'
   import loop, { setMT, setClick } from '../scripts/loop'
   const RADIUS = 0.2
+  let webView = document.querySelector('webview')
 
   export default {
     name: 'viewer',
@@ -21,6 +22,13 @@
         posY: 0
       }
     },
+    methods: {
+      setControls () {
+        webView.addEventListener('dom-ready', () => {
+          this.$emit('setControls', {back: webView.canGoBack(), front: webView.canGoForward()})
+        })
+      }
+    },
     computed: {
       getBackground: function () {
         let radius = electron.window.getSize()[0] * this.radius
@@ -29,14 +37,23 @@
     },
     watch: {
       clickable () { setClick(this.clickable) },
-      mt () { setMT(this.mt) }
+      mt () { setMT(this.mt) },
+      url () { this.setControls() }
     },
     mounted: function () {
-      const WEBVIEW = document.querySelector('webview')
-      WEBVIEW.addEventListener('dom-ready', () => {
-        this.$parent.$on('back', () => { WEBVIEW.goBack() })
-        this.$parent.$on('front', () => { WEBVIEW.goForward() })
-        // webview.openDevTools()
+      webView = document.querySelector('webview')
+      webView.addEventListener('dom-ready', () => {
+        this.$parent.$on('go', (val) => {
+          switch (val) {
+            case 'back':
+              webView.goBack()
+              break
+            case 'front':
+              webView.goForward()
+          }
+          this.setControls()
+        })
+        this.$parent.$on('dev', () => { webView.openDevTools() })
       })
 
       loop(this)

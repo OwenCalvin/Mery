@@ -2,10 +2,10 @@
   <div class="main-page">
     <header class="control" v-if="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
       <span class="left side">
-        <span class="text-white btn fa" @click="goBack">
+        <span class="text-white btn fa" :class="{'disable': !controls.canGoBack}" @click="goBack">
           <font-awesome-icon :icon="icons.left"/>
         </span>
-        <span class="text-white btn fa" @click="goFront">
+        <span class="text-white btn fa" :class="{'disable': !controls.canGoFront}" @click="goFront">
           <font-awesome-icon :icon="icons.right"/>
         </span>
       </span>
@@ -28,11 +28,13 @@
         </span>
       </span>
     </header>
-    <Viewer class="viewer" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight), bottom: getPx(totalHeadHeight)}"></Viewer>
-    <footer class="control" :style="{height: getPx(head.height), marginTop: getPx(head.mb)}">
+
+    <Viewer class="viewer" @setControls="setControls" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight), bottom: getPx(totalHeadHeight)}"></Viewer>
+    
+    <footer class="control" v-if="head.visible" :style="{height: getPx(head.height), marginTop: getPx(head.mb)}">
       <span class="side">
         <span :class="{'active': !head.visible}" class="text-white btn fa" @click="toggleHead">
-          <font-awesome-icon :icon="icons.eyeSlash"/>
+          <font-awesome-icon :icon="icons.eye"/>
         </span>
         <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
           <font-awesome-icon :icon="icons.click"/>
@@ -59,6 +61,10 @@
     name: 'main-page',
     data: function () {
       return {
+        controls: {
+          canGoBack: false,
+          canGoFront: false
+        },
         clickable: true,
         link: {
           text: LINK,
@@ -94,8 +100,12 @@
       closeWindow () { Electron.window.close() },
       minimizeWindow () { Electron.window.minimize() },
       // maximizeWindow () { Electron.window.maximize() }
-      goBack () { this.$emit('back') },
-      goFront () { this.$emit('front') }
+      goBack () { this.$emit('go', 'back') },
+      goFront () { this.$emit('go', 'front') },
+      setControls (val) {
+        this.controls.canGoBack = val.back
+        this.controls.canGoFront = val.front
+      }
     },
     computed: {
       totalHeadHeight () { return this.head.height + this.head.mb }
@@ -103,6 +113,7 @@
     mounted: function () {
       ipcRenderer.on('key', () => { this.toggleHead() })
       ipcRenderer.on('mouse', () => { this.toggleClick() })
+      ipcRenderer.on('dev', () => { this.$emit('dev') })
     },
     components: {
       FontAwesomeIcon,

@@ -16,9 +16,7 @@ export function setClick (val) {
 }
 
 export default function loop (obj) {
-  setInterval(function () {
-    getStatut(obj)
-  }, 0)
+  setInterval(function () { getStatut(obj) }, 0)
 }
 
 function getStatut (obj) {
@@ -33,8 +31,8 @@ function getStatut (obj) {
     let newX = mousePos.x - bounds.x
     let newY = mousePos.y - bounds.y - marginTop
 
-    if (WINDOW.isResizable) {
-      setWindow(newY > 0 && newY < size[0] - marginTop)
+    if (WINDOW.isResizable()) {
+      setWindow(newY > 0 && newY < size[1] - 2 * marginTop)
     }
 
     obj.posX = newX

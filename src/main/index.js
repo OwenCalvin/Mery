@@ -44,6 +44,10 @@ function createWindow () {
   globalShortcut.register('CommandOrControl+Alt+C', () => {
     mainWindow.webContents.send('mouse')
   })
+
+  globalShortcut.register('CommandOrControl+Alt+V', () => {
+    mainWindow.webContents.send('dev')
+  })
 }
 
 app.on('ready', createWindow)
