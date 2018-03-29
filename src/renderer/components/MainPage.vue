@@ -105,10 +105,10 @@
     },
     methods: {
       toggleHead () {
-        electron.window.setResizable(this.head.visible)
-        this.head.height = this.head.visible ? 0 : HEIGHT
-        this.head.mb = this.head.visible ? 0 : MB
         this.head.visible = !this.head.visible
+        electron.window.setResizable(this.head.visible)
+        this.head.height = this.head.visible ? HEIGHT : 0
+        this.head.mb = this.head.visible ? MB : 0
       },
       toggleClick () {
         this.clickable = !this.clickable
