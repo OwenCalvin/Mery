@@ -139,7 +139,8 @@
       totalHeadHeight () { return this.head.height + this.head.mb }
     },
     mounted: function () {
-      ipcRenderer.on('key', () => { this.toggleHead() })
+      ipcRenderer.on('top', () => { this.toggleTop() })
+      ipcRenderer.on('view', () => { this.toggleHead() })
       ipcRenderer.on('mouse', () => { this.toggleClick() })
       ipcRenderer.on('dev', () => { this.$emit('web', 'dev') })
     },

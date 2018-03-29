@@ -37,8 +37,12 @@ function createWindow () {
     mainWindow = null
   })
 
+  globalShortcut.register('CommandOrControl+Alt+Y', () => {
+    mainWindow.webContents.send('top')
+  })
+
   globalShortcut.register('CommandOrControl+Alt+X', () => {
-    mainWindow.webContents.send('key')
+    mainWindow.webContents.send('view')
   })
 
   globalShortcut.register('CommandOrControl+Alt+C', () => {
