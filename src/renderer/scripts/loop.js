@@ -21,8 +21,8 @@ export default function loop (obj) {
 
 function getStatut (obj) {
   if (!clickable) {
-    if (obj.radius <= 0) {
-      obj.radius = 0.2
+    if (obj.disable) {
+      obj.disable = false
     }
     let bounds = WINDOW.getBounds()
     let mousePos = SCREEN.getCursorScreenPoint()
@@ -38,7 +38,7 @@ function getStatut (obj) {
     obj.posX = newX
     obj.posY = newY
   } else {
-    obj.radius = 0
+    obj.disable = true
   }
 }
 

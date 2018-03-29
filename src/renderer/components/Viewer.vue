@@ -1,23 +1,21 @@
 <template>
   <div class="viewer">
-    <div id="mask" class="mask" :style="{'-webkit-mask-image': getBackground}">
+    <div id="mask" class="mask" :style="{'-webkit-mask-image': getBackground, opacity: opacity}">
       <webview class="web" :src="'http://' + url" autosize allowtransparency></webview>
     </div>
   </div>
 </template>
 
 <script>
-  import electron from '../scripts/imports/electron'
   import loop, { setMT, setClick } from '../scripts/loop'
-  const RADIUS = 0.2
   let webView = document.querySelector('webview')
 
   export default {
     name: 'viewer',
-    props: ['mt', 'url', 'clickable'],
+    props: ['mt', 'url', 'clickable', 'opacity', 'radius'],
     data: function () {
       return {
-        radius: RADIUS,
+        disable: true,
         posX: 0,
         posY: 0
       }
@@ -31,8 +29,9 @@
     },
     computed: {
       getBackground: function () {
-        let radius = electron.window.getSize()[0] * this.radius
-        return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent ${radius}px, white 0%)`
+        if (!this.disable) {
+          return `radial-gradient(circle at ${this.posX}px ${this.posY}px, transparent ${this.radius}px, white 0%)`
+        }
       }
     },
     watch: {
@@ -43,17 +42,23 @@
     mounted: function () {
       webView = document.querySelector('webview')
       webView.addEventListener('dom-ready', () => {
-        this.$parent.$on('go', (val) => {
+        this.$parent.$on('web', (val) => {
           switch (val) {
             case 'back':
               webView.goBack()
               break
             case 'front':
               webView.goForward()
+              break
+            case 'refresh':
+              webView.reload()
+              break
+            case 'dev':
+              webView.openDevTools()
+              break
           }
           this.setControls()
         })
-        this.$parent.$on('dev', () => { webView.openDevTools() })
       })
 
       loop(this)

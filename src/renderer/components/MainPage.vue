@@ -8,6 +8,9 @@
         <span class="text-white btn fa" :class="{'disable': !controls.canGoFront}" @click="goFront">
           <font-awesome-icon :icon="icons.right"/>
         </span>
+        <span class="text-white btn fa" @click="refresh">
+          <font-awesome-icon :icon="icons.reload"/>
+        </span>
       </span>
       <span class="drag"></span>
       <span class="side input">
@@ -18,18 +21,13 @@
         <span class="text-white btn fa">
           <font-awesome-icon :icon="icons.minimize" @click="minimizeWindow"/>
         </span>
-        <!--
-        <md-button class="text-white btn fa md-icon-button">
-          <font-awesome-icon :icon="icons.maximize" @click="maximizeWindow"/>
-        </md-button>
-        -->
         <span class="text-white btn fa">
           <font-awesome-icon :icon="icons.cross" @click="closeWindow"/>
         </span>
       </span>
     </header>
 
-    <Viewer class="viewer" @setControls="setControls" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight), bottom: getPx(totalHeadHeight)}"></Viewer>
+    <Viewer class="viewer" @setControls="setControls" :radius="radius" :opacity="opacity" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight), bottom: getPx(totalHeadHeight)}"></Viewer>
     
     <footer class="control" v-if="head.visible" :style="{height: getPx(head.height), marginTop: getPx(head.mb)}">
       <span class="side">
@@ -40,16 +38,31 @@
           <font-awesome-icon :icon="icons.click"/>
         </span>
       </span>
+
       <span class="drag"></span>
-      <span class="side"></span>
+      
+      <span class="side">
+        <vue-slider ref="slider" v-model="radius" :min="50" :max="350" :interval="1" :tooltip="false" width="100%"></vue-slider>
+        <span class="text-white fa">
+          <font-awesome-icon :icon="icons.dot"/>
+        </span>
+      </span>
+
+      <span class="side">
+        <vue-slider ref="slider" v-model="opacity" :min="0.1" :max="1" :interval=".01" :tooltip="false" width="100%"></vue-slider>
+        <span class="text-white fa">
+          <font-awesome-icon :icon="icons.opacity"/>
+        </span>
+      </span>
     </footer>
   </div>
 </template>
 
 <script>
+  import vueSlider from 'vue-slider-component'
   import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
   import Icons from '../scripts/imports/icons'
-  import Electron from '../scripts/imports/electron'
+  import electron from '../scripts/imports/electron'
   import Viewer from './Viewer.vue'
   import { ipcRenderer } from 'electron'
 
@@ -61,6 +74,13 @@
     name: 'main-page',
     data: function () {
       return {
+        opacity: 0.9,
+        radius: 200,
+        sizeState: {
+          maximized: false,
+          width: electron.window.getSize[0],
+          height: electron.window.getSize[1]
+        },
         controls: {
           canGoBack: false,
           canGoFront: false
@@ -82,12 +102,12 @@
     methods: {
       toggleHead () {
         if (this.head.visible) {
-          Electron.window.setResizable(false)
+          electron.window.setResizable(false)
           this.head.height = 0
           this.head.mb = 0
           this.head.visible = false
         } else {
-          Electron.window.setResizable(true)
+          electron.window.setResizable(true)
           this.head.height = HEIGHT
           this.head.mb = MB
           this.head.visible = true
@@ -97,11 +117,11 @@
         this.clickable = !this.clickable
       },
       getPx (val) { return val + 'px' },
-      closeWindow () { Electron.window.close() },
-      minimizeWindow () { Electron.window.minimize() },
-      // maximizeWindow () { Electron.window.maximize() }
-      goBack () { this.$emit('go', 'back') },
-      goFront () { this.$emit('go', 'front') },
+      closeWindow () { electron.window.close() },
+      minimizeWindow () { electron.window.minimize() },
+      goBack () { this.$emit('web', 'back') },
+      goFront () { this.$emit('web', 'front') },
+      refresh () { this.$emit('web', 'refresh') },
       setControls (val) {
         this.controls.canGoBack = val.back
         this.controls.canGoFront = val.front
@@ -113,9 +133,10 @@
     mounted: function () {
       ipcRenderer.on('key', () => { this.toggleHead() })
       ipcRenderer.on('mouse', () => { this.toggleClick() })
-      ipcRenderer.on('dev', () => { this.$emit('dev') })
+      ipcRenderer.on('dev', () => { this.$emit('web', 'dev') })
     },
     components: {
+      vueSlider,
       FontAwesomeIcon,
       Viewer
     }
