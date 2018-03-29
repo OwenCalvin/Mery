@@ -28,14 +28,10 @@
       }
     },
     watch: {
-      clickable () {
-        setClick(this.clickable)
-      }
+      clickable () { setClick(this.clickable) },
+      mt () { setMT(this.mt) }
     },
-    mounted: function () {
-      setMT(this.mt)
-      loop(this)
-    }
+    mounted: function () { loop(this) }
   }
 </script>
 

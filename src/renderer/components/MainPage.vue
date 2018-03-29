@@ -84,12 +84,7 @@
       // maximizeWindow () { Electron.window.maximize() }
     },
     computed: {
-      totalHeadHeight () {
-        return this.head.height + this.head.mb
-      },
-      eyeIcon () {
-        return this.head.height > 0 ? Icons.eyeSlash : Icons.eye
-      }
+      totalHeadHeight () { return this.head.height + this.head.mb }
     },
     mounted: function () {
       ipcRenderer.on('key', () => { this.toggleHead() })
