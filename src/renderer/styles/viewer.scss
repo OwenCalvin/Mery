@@ -1,6 +1,11 @@
 .mask {
-    z-index: 999999;
+    opacity: .9;
     background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+}
+
+.web {
     height: 100%;
     width: 100%;
 }

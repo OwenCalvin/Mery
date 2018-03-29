@@ -1,6 +1,6 @@
 header {
     color: white;
-    background: #387ee6;
+    background: rgb(50, 50, 50);
     opacity: .9;
     transition: opacity .3s;
     border-radius: 15px;
@@ -34,6 +34,7 @@ header {
 }
 
 .side {
+    min-width: 8em;
     padding: .5em;
 }
 
@@ -46,6 +47,10 @@ header {
         background: rgba($color: white, $alpha: .1)
     }
     vertical-align: middle;
+}
+
+.active {
+    background: rgba($color: white, $alpha: .2);
 }
 
 .fa {
@@ -61,10 +66,6 @@ header {
     width: 100%;
 }
 
-.right {
-    min-width: 7em;
-}
-
 .md-icon-button {
     border-radius: 5px;
     .md-ripple {
@@ -73,7 +74,9 @@ header {
 }
 
 .input {
+    width: 100%;
     .input-text {
+        width: 100%;
         font-size: 1.5em;
         border: none;
         background: rgba($color: white, $alpha: .98);

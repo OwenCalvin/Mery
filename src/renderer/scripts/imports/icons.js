@@ -5,10 +5,12 @@ import Eye from '@fortawesome/fontawesome-free-solid/faEye'
 import Cross from '@fortawesome/fontawesome-free-solid/faTimesCircle'
 import Maximize from '@fortawesome/fontawesome-free-solid/faWindowMaximize'
 import Minimize from '@fortawesome/fontawesome-free-solid/faWindowMinimize'
+import Click from '@fortawesome/fontawesome-free-solid/faMousePointer'
 
 export default {
   eyeSlash: EyeSlash,
   eye: Eye,
+  click: Click,
   // lock: Lock,
   // unlock: Unlock,
   cross: Cross,

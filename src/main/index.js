@@ -29,7 +29,7 @@ function createWindow () {
     minHeight: 100
   })
 
-  mainWindow.setIgnoreMouseEvents(true, {forward: true})
+  mainWindow.setIgnoreMouseEvents(false, {forward: true})
   mainWindow.setAlwaysOnTop(true)
   mainWindow.loadURL(winURL)
 
@@ -39,6 +39,10 @@ function createWindow () {
 
   globalShortcut.register('CommandOrControl+Alt+X', () => {
     mainWindow.webContents.send('key')
+  })
+
+  globalShortcut.register('CommandOrControl+Alt+C', () => {
+    mainWindow.webContents.send('mouse')
   })
 }
 

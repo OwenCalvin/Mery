@@ -2,13 +2,16 @@
   <div class="main-page">
     <header class="header" v-if="head.visible" :style="{height: getPx(head.height), marginBottom: getPx(head.mb)}">
       <span class="left side">
-        <span class="text-white btn fa" @click="toggleHead">
-          <font-awesome-icon :icon="eyeIcon"/>
+        <span :class="{'active': head.visible}" class="text-white btn fa" @click="toggleHead">
+          <font-awesome-icon :icon="icons.eyeSlash"/>
+        </span>
+        <span :class="{'active': clickable}" class="text-white btn fa" @click="toggleClick">
+          <font-awesome-icon :icon="icons.click"/>
         </span>
       </span>
       <span class="drag"></span>
       <span class="side input">
-        <input type="text" class="input-text">
+        <input type="text" class="input-text" @keypress.enter="link.url = link.text" v-model="link.text">
       </span>
       <span class="drag"></span>
       <span class="right side">
@@ -25,7 +28,7 @@
         </span>
       </span>
     </header>
-    <Viewer class="viewer" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight)}"></Viewer>
+    <Viewer class="viewer" :clickable="clickable" :url="link.url" :mt="totalHeadHeight" :style="{top: getPx(totalHeadHeight)}"></Viewer>
   </div>
 </template>
 
@@ -36,6 +39,7 @@
   import Viewer from './Viewer.vue'
   import { ipcRenderer } from 'electron'
 
+  const LINK = 'www.youtube.com'
   const HEIGHT = 40
   const MB = 3
 
@@ -43,6 +47,11 @@
     name: 'main-page',
     data: function () {
       return {
+        clickable: true,
+        link: {
+          text: LINK,
+          url: LINK
+        },
         icons: Icons,
         head: {
           visible: true,
@@ -66,8 +75,8 @@
           this.head.visible = true
         }
       },
-      key () {
-        this.toggleHead()
+      toggleClick () {
+        this.clickable = !this.clickable
       },
       getPx (val) { return val + 'px' },
       closeWindow () { Electron.window.close() },
@@ -83,9 +92,8 @@
       }
     },
     mounted: function () {
-      ipcRenderer.on('key', () => {
-        this.toggleHead()
-      })
+      ipcRenderer.on('key', () => { this.toggleHead() })
+      ipcRenderer.on('mouse', () => { this.toggleClick() })
     },
     components: {
       FontAwesomeIcon,
