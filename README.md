@@ -1,8 +1,13 @@
-# see
+# See
 
-> A mini browser
+A floating browser
 
-#### Build Setup
+ ## Shortcuts (CTRL = CMD on Mac):  
+ CTRL + ALT + X : Enable/Disable controls  
+ CTRL + ALT + C : Enable/Disable click through  
+ CTRL + ALT + V : Open dev tool of the current page  
+
+## Commands
 
 ``` bash
 # install dependencies
@@ -14,12 +19,4 @@ npm run dev
 # build electron application for production
 npm run build
 
-
-# lint all JS/Vue component files in `src/`
-npm run lint
-
 ```
-
----
-
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[7c4e3e9](https://github.com/SimulatedGREG/electron-vue/tree/7c4e3e90a772bd4c27d2dd4790f61f09bae0fcef) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
