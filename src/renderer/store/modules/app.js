@@ -3,17 +3,20 @@ const MARGIN = 3
 const URL = 'www.youtube.com'
 
 const state = {
+  // State of the window
   window: {
     opacity: 0.9,
     clickable: true,
     top: true
   },
+  // Top and bottom state
   control: {
     visible: true,
     height: HEIGHT,
     margin: MARGIN,
     totalHeight: HEIGHT + MARGIN
   },
+  // State of the ball
   ball: {
     radius: 200,
     pos: {
@@ -21,6 +24,7 @@ const state = {
       y: 0
     }
   },
+  // State of the Viewer (Browser)
   web: {
     can: {
       back: false,

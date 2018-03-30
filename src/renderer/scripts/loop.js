@@ -16,10 +16,11 @@ export default function loop (obj) {
     let newY = mousePos.y - bounds.y - obj.control.totalHeight
 
     if (!obj.window.clickable) {
-      // If the cursor touch the Top or Bottom component => set the window clickable
       if (obj.control.visible) {
+        // If the cursor touch the Top or Bottom component => set the window clickable
         setIgnoreClick(newY > 0 && newY < size[1] - 2 * obj.control.totalHeight)
       } else {
+        // Ignore all mouse event if the window isn't clickable
         setIgnoreClick(true)
       }
 
@@ -29,6 +30,7 @@ export default function loop (obj) {
         y: newY
       })
     } else {
+      // Ignore mouse event on Top and Bottom if they are hidden
       setIgnoreClick(!obj.control.visible && (newY < 0 || newY > size[1] - 2 * obj.control.totalHeight))
     }
   }, 0)
