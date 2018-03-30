@@ -1,25 +1,21 @@
 <template>
   <div class="main-page">
-    <transition name="fade" mode="out-in">
-      <Top
-      class="control top"
-      v-show="control.visible"
-      :style="{height: getPx(control.height), marginBottom: getPx(control.margin)}">
-      </Top>
-    </transition>
+    <Top
+    class="control top"
+    v-show="control.visible"
+    :style="{height: getPx(control.height), marginBottom: getPx(control.margin)}">
+    </Top>
 
     <Viewer
     class="viewer"
     :style="{top: getPx(control.totalHeight), bottom: getPx(control.totalHeight)}">
     </Viewer>
 
-    <transition name="fade" mode="out-in">
-      <Bottom
-      class="control bottom"
-      v-show="control.visible"
-      :style="{height: getPx(control.height), marginTop: getPx(control.margin)}">
-      </Bottom>
-    </transition>
+    <Bottom
+    class="control bottom"
+    v-show="control.visible"
+    :style="{height: getPx(control.height), marginTop: getPx(control.margin)}">
+    </Bottom>
   </div>
 </template>
 
