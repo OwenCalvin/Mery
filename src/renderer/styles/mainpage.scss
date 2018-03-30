@@ -1,3 +1,10 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .control {
     display: flex;
     justify-content: space-between;
@@ -20,7 +27,7 @@
     }
 }
 
-footer {
+.bottom {
     position: absolute;
     bottom: 0;
 }
