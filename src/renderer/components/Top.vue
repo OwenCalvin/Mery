@@ -13,7 +13,13 @@
     </span>
     <span class="drag"></span>
     <span class="side input">
-      <input type="text" class="input-text" @focus="selectAll($event)" @keypress.enter="setWebUrl(url)" v-model="url">
+      <input
+      type="text"
+      class="input-text"
+      @blur="setFocus(false)"
+      @focus="setFocus(true, $event)"
+      @keypress.enter="setWebUrl(web.text)"
+      v-model="url">
     </span>
     <span class="drag"></span>
     <span class="right side">
@@ -42,16 +48,20 @@
     name: 'top',
     data () {
       return {
+        focused: false,
         icons: icons
       }
     },
     methods: {
       ...mapActions([
         'setWebUrl',
-        'setWebUrlText'
+        'setWebText'
       ]),
-      selectAll (event) {
-        event.target.select()
+      setFocus (val, event = null) {
+        this.focused = val
+        if (event) {
+          event.target.select()
+        }
       },
       closeWindow () { WINDOW.close() },
       minimizeWindow () { WINDOW.minimize() },
@@ -79,8 +89,8 @@
         'control'
       ]),
       url: {
-        get () { return this.web.urlText },
-        set (val) { this.setWebUrlText(val) }
+        get () { return this.web.text },
+        set (val) { this.setWebText(val) }
       }
     },
     components: {

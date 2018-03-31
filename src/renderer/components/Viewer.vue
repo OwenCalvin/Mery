@@ -26,11 +26,12 @@
         'setWindowClick',
         'setWebview',
         'setWebCan',
-        'setWebUrlText'
+        'setWebText',
+        'setWebUrl'
       ]),
       setWebviewControls (webview) {
         // Set the web controls
-        this.setWebUrlText(webview.getURL())
+        this.setWebText(webview.getURL())
         this.setWebCan({
           back: webview.canGoBack(),
           forward: webview.canGoForward(),
@@ -71,6 +72,10 @@
             forward: false,
             refresh: false
           })
+        })
+
+        webview.addEventListener('new-window', (event) => {
+          this.setWebUrl(event.url)
         })
       })
       loop(this)
