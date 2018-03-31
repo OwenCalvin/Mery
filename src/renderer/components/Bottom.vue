@@ -4,11 +4,17 @@
       <span class="text-white btn fa" @click="toggleControlVisibility(win)">
         <font-awesome-icon :icon="icons.eye"/>
       </span>
+
       <span :class="{'active': window.top}" class="text-white btn fa" @click="toggleWindowTop(win)">
         <font-awesome-icon :icon="icons.windows"/>
       </span>
+
       <span :class="{'active': window.clickable}" class="text-white btn fa" @click="toggleWindowClick(win)">
         <font-awesome-icon :icon="icons.click"/>
+      </span>
+
+      <span class="text-white btn fa" @click="addWebTab">
+        <font-awesome-icon :icon="icons.plus"/>
       </span>
     </span>
 
@@ -69,7 +75,8 @@
         'toggleWindowClick',
         'toggleWindowTop',
         'setBallRadius',
-        'setWindowOpacity'
+        'setWindowOpacity',
+        'addWebTab'
       ])
     },
     computed: {

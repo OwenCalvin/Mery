@@ -103,11 +103,12 @@ const mutations = {
 
 const actions = {
   // Web
-  setWebUrl ({ commit }, tab, url) { commit('setWebUrl', tab, url) },
-  setWebTitle ({ commit }, tab, title) { commit('setWebTitle', tab, title) },
-  setWebText ({ commit }, tab, text) { commit('setWebText', tab, text) },
-  setWebview ({ commit }, tab, webview) { commit('setWebview', tab, webview) },
-  setWebCan ({ commit }, tab, can) { commit('setWebCan', tab, can) },
+  setWebUrl ({ commit }, url, tab) { commit('setWebUrl', url, tab) },
+  setWebTitle ({ commit }, title, tab) { commit('setWebTitle', title, tab) },
+  setWebText ({ commit }, text, tab) { commit('setWebText', text, tab) },
+  setWebview ({ commit }, webview, tab) { commit('setWebview', webview, tab) },
+  setWebCan ({ commit }, can, tab) { commit('setWebCan', can, tab) },
+  addWebTab ({ commit }, number) { commit('addWebTab', number) },
   // Window
   toggleControlVisibility ({ commit }, window) { commit('toggleControlVisibility', window) },
   toggleWindowTop ({ commit }, window) { commit('toggleWindowTop', window) },

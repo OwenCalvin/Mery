@@ -7,6 +7,9 @@
     </Top>
 
     <Viewer
+    v-for="(tab, index) in web.tabs"
+    v-if="index === web.selectedTab"
+    :key="index"
     class="viewer"
     :style="{top: getPx(control.totalHeight), bottom: getPx(control.totalHeight)}">
     </Viewer>
@@ -38,7 +41,10 @@
       getPx (val) { return val + 'px' }
     },
     computed: {
-      ...mapGetters([ 'control' ])
+      ...mapGetters([
+        'control',
+        'web'
+      ])
     },
     components: {
       Top,

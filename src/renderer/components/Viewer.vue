@@ -18,6 +18,7 @@
 
   export default {
     name: 'viewer',
+    props: ['index'],
     methods: {
       ...mapActions([
         'setBallPos',

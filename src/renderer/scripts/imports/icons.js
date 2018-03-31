@@ -13,11 +13,13 @@ import Dot from '@fortawesome/fontawesome-free-solid/faDotCircle'
 import Opacity from '@fortawesome/fontawesome-free-solid/faAdjust'
 import Windows from '@fortawesome/fontawesome-free-solid/faWindowRestore'
 import Settings from '@fortawesome/fontawesome-free-solid/faCog'
+import Plus from '@fortawesome/fontawesome-free-solid/faPlus'
 
 export default {
   eyeSlash: EyeSlash,
   eye: Eye,
   dot: Dot,
+  plus: Plus,
   windows: Windows,
   opacity: Opacity,
   click: Click,
