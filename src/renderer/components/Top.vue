@@ -83,9 +83,6 @@
         set (val) { this.setWebUrlText(val) }
       }
     },
-    mounted: function () {
-      this.url = this.web.url
-    },
     components: {
       FontAwesomeIcon
     }

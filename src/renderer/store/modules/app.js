@@ -1,7 +1,7 @@
 const HEIGHT = 40
 const MARGIN = 3
-const URL = 'www.youtube.com'
-const URL_TEST = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
+const URL = 'https://daven.io'
+const URL_TEST = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/
 
 const state = {
   // State of the window

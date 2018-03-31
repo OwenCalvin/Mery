@@ -46,14 +46,14 @@
         'ball',
         'window'
       ]),
-      getBackground: function () {
+      getBackground () {
         // Make a hole with -webkit-mask-image
         if (!this.window.clickable) {
           return `radial-gradient(circle at ${this.ball.pos.x}px ${this.ball.pos.y}px, transparent ${this.ball.radius}px, white 0%)`
         }
       }
     },
-    mounted: function () {
+    mounted () {
       let webview = document.querySelector('webview')
       webview.addEventListener('dom-ready', () => {
         ipcRenderer.on('dev', () => { webview.openDevTools() })
@@ -74,6 +74,7 @@
           })
         })
 
+        // Do not resize window when we enter in fullscreen mode with videos
         webview.addEventListener('enter-html-full-screen', () => {
           electron.window.setFullScreen(false)
         })
