@@ -7,7 +7,7 @@
       <span class="text-white btn fa" :class="{'disable': !web.can.forward}" @click="goForward">
         <font-awesome-icon :icon="icons.right"/>
       </span>
-      <span class="text-white btn fa" :class="{'disable': !web.can.refresh}" @click="reload">
+      <span class="text-white btn fa" :class="{'disable': !web.can.refresh, 'loading': !web.can.refresh}" @click="reload">
         <font-awesome-icon :icon="icons.reload"/>
       </span>
     </span>
@@ -91,4 +91,13 @@
 
 <style lang="scss" scoped>
   @import '../styles/global.scss';
+
+  .loading {
+    animation: rotate 1s infinite;
+  }
+
+  @keyframes rotate {
+      from { transform: rotate(0); }
+      to { transform: rotate(360deg); }
+  }
 </style>
