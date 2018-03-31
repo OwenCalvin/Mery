@@ -19,6 +19,14 @@
     </span>
 
     <span class="drag"></span>
+    <span>
+      <select v-model="tabSelection">
+        <option v-for="(tab, index) in web.tabs" :key="index">
+          {{ index }}
+        </option>
+      </select>
+    </span>
+    <span class="drag"></span>
 
     <span class="side">
       <vue-slider
@@ -76,13 +84,15 @@
         'toggleWindowTop',
         'setBallRadius',
         'setWindowOpacity',
-        'addWebTab'
+        'addWebTab',
+        'setSelectedTab'
       ])
     },
     computed: {
       ...mapGetters([
         'window',
-        'ball'
+        'ball',
+        'web'
       ]),
       radius: {
         get () { return this.ball.radius },
@@ -91,6 +101,10 @@
       opacity: {
         get () { return this.window.opacity },
         set (val) { this.setWindowOpacity(val) }
+      },
+      tabSelection: {
+        get () { return this.web.selectedTab },
+        set (val) { this.setSelectedTab(val) }
       }
     },
     mounted () {

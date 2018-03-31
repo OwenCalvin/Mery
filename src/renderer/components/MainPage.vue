@@ -7,9 +7,6 @@
     </Top>
 
     <Viewer
-    v-for="(tab, index) in web.tabs"
-    v-if="index === web.selectedTab"
-    :key="index"
     class="viewer"
     :style="{top: getPx(control.totalHeight), bottom: getPx(control.totalHeight)}">
     </Viewer>
@@ -30,21 +27,32 @@
 </template>
 
 <script>
+  import loop from '../scripts/loop'
   import Top from './Top.vue'
   import Viewer from './Viewer.vue'
   import Bottom from './Bottom.vue'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     name: 'main-page',
     methods: {
+      ...mapActions([
+        'setBallPos',
+        'setBallVisibility',
+        'setWindowClick'
+      ]),
       getPx (val) { return val + 'px' }
     },
     computed: {
       ...mapGetters([
+        'web',
         'control',
-        'web'
+        'ball',
+        'window'
       ])
+    },
+    mounted () {
+      loop(this)
     },
     components: {
       Top,
@@ -60,6 +68,13 @@
     position: absolute;
     width: 100%;
     height: 100%;
+  }
+
+  .viewer {
+      border-radius: 10px;
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
   }
 
   .control {

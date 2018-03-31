@@ -18,7 +18,7 @@
       class="input-text"
       @blur="setFocus(false)"
       @focus="setFocus(true, $event)"
-      @keypress.enter="setWebUrl(selectedTab.text)"
+      @keypress.enter="goTo"
       v-model="url">
     </span>
     <span class="drag"></span>
@@ -65,6 +65,12 @@
       },
       closeWindow () { WINDOW.close() },
       minimizeWindow () { WINDOW.minimize() },
+      goTo () {
+        this.setWebUrl({
+          url: this.selectedTab.text,
+          index: this.web.selectedTab
+        })
+      },
       goBack () {
         if (this.selectedTab.can.back) {
           this.selectedTab.webview.goBack()
@@ -91,7 +97,12 @@
       ]),
       url: {
         get () { return this.selectedTab.text },
-        set (val) { this.setWebText(val) }
+        set (val) {
+          this.setWebText({
+            text: val,
+            index: this.web.selectedTab
+          })
+        }
       }
     },
     components: {

@@ -1,51 +1,26 @@
 <template>
   <div class="viewer">
     <div class="mask" :style="{'-webkit-mask-image': getBackground, opacity: window.opacity}">
-      <webview
-      class="web"
-      :src="selectedTab.url"
-      autosize
-      allowtransparency>
-      </webview>
+      <Web
+      v-for="(tab, index) in web.tabs"
+      :key="index"
+      :index="index">
+      </Web>
     </div>
   </div>
 </template>
 
 <script>
-  import loop from '../scripts/loop'
-  import { mapGetters, mapActions } from 'vuex'
-  import { ipcRenderer } from 'electron'
+  import Web from './Web'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'viewer',
-    props: ['index'],
-    methods: {
-      ...mapActions([
-        'setBallPos',
-        'setBallVisibility',
-        'setWindowClick',
-        'setWebview',
-        'setWebCan',
-        'setWebText',
-        'setWebUrl'
-      ]),
-      setWebviewControls (webview) {
-        // Set the web controls
-        this.setWebText(webview.getURL())
-        this.setWebCan({
-          back: webview.canGoBack(),
-          forward: webview.canGoForward(),
-          reload: true
-        })
-      }
-    },
     computed: {
       ...mapGetters([
         'web',
-        'control',
         'ball',
-        'window',
-        'selectedTab'
+        'window'
       ]),
       getBackground () {
         // Make a hole with -webkit-mask-image
@@ -54,45 +29,12 @@
         }
       }
     },
-    mounted () {
-      let webview = document.querySelector('webview')
-      webview.addEventListener('dom-ready', () => {
-        ipcRenderer.on('dev', () => { webview.openDevTools() })
-
-        this.setWebview(webview)
-        this.setWebviewControls(webview)
-
-        webview.addEventListener('load-commit', () => {
-          this.setWebviewControls(webview)
-        })
-
-        // Cannot do actions when the page isn't loaded
-        webview.addEventListener('did-start-loading', () => {
-          this.setWebCan({
-            back: false,
-            forward: false,
-            reload: false
-          })
-        })
-
-        webview.addEventListener('new-window', (event) => {
-          this.setWebUrl(event.url)
-        })
-      })
-      loop(this)
-    }
+    components: { Web }
   }
 </script>
 
 <style lang="scss" scoped>
   @import '../styles/global.scss';
-
-  .viewer {
-      border-radius: 10px;
-      overflow: hidden;
-      position: absolute;
-      width: 100%;
-  }
 
   .mask {
       transition: opacity .2s;
@@ -102,8 +44,7 @@
   }
 
   .web {
-      height: 100%;
-      width: 100%;
-      display: inline-flex;
+    height: 100%;
+    width: 100%;
   }
 </style>

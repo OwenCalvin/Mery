@@ -2,16 +2,19 @@ const HEIGHT = 40
 const MARGIN = 3
 const URL = 'https://daven.io'
 const URL_TEST = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/
-const DEFAULT_TAB = {
-  can: {
-    back: false,
-    forward: false,
-    reload: false
-  },
-  title: null,
-  text: URL,
-  url: URL,
-  webview: null
+
+function getNewTab () {
+  return {
+    can: {
+      back: false,
+      forward: false,
+      reload: false
+    },
+    title: null,
+    text: URL,
+    url: URL,
+    webview: null
+  }
 }
 
 const state = {
@@ -39,7 +42,7 @@ const state = {
   // State of the Viewer (Browser)
   web: {
     selectedTab: 0,
-    tabs: [ DEFAULT_TAB ]
+    tabs: [ getNewTab() ]
   }
 }
 
@@ -49,33 +52,36 @@ const getters = {
   control: state => state.control,
   ball: state => state.ball,
   web: state => state.web,
-  selectedTab: State => state.web.tabs[state.web.selectedTab]
+  selectedTab: state => state.web.tabs[state.web.selectedTab]
 }
 
 const mutations = {
   // Web
-  setWebUrl (state, url, tab = state.web.selectedTab) {
+  setWebUrl (state, params) {
     let http = 'http://'
-    let cond = url.substring(0, 7) === http || url.substring(0, 8) === 'https://'
-    let httpURL = (cond ? '' : http) + url
-    state.web.tabs[tab].url = (URL_TEST.test(httpURL) ? httpURL : 'https://www.google.com/search?q=' + url)
+    let cond = params.url.substring(0, 7) === http || params.url.substring(0, 8) === 'https://'
+    let httpURL = (cond ? '' : http) + params.url
+    state.web.tabs[params.index].url = (URL_TEST.test(httpURL) ? httpURL : 'https://www.google.com/search?q=' + params.url)
   },
-  setWebTitle (state, title, tab = state.web.selectedTab) {
-    state.web.tabs[tab].title = title
+  setWebTitle (state, params) {
+    state.web.tabs[params.index].title = params.title
   },
-  setWebText (state, text, tab = state.web.selectedTab) {
-    state.web.tabs[tab].text = text
+  setWebText (state, params) {
+    state.web.tabs[params.index].text = params.text
   },
-  setWebview (state, webview, tab = state.web.selectedTab) {
-    state.web.tabs[tab].webview = webview
+  setWebview (state, params) {
+    state.web.tabs[params.index].webview = params.webview
   },
-  setWebCan (state, can, tab = state.web.selectedTab) {
-    state.web.tabs[tab].can = can
+  setWebCan (state, params) {
+    state.web.tabs[params.index].can = params.can
   },
-  addWebTab (state, number = 1) {
-    for (let i = 0; i <= number; i++) {
-      state.web.tabs.push(DEFAULT_TAB)
+  setSelectedTab (state, index) {
+    if (index !== state.web.selectedTab) {
+      state.web.selectedTab = parseInt(index)
     }
+  },
+  addWebTab (state) {
+    state.web.tabs.push(getNewTab())
   },
   // Window
   toggleControlVisibility (state, window) {
@@ -103,11 +109,12 @@ const mutations = {
 
 const actions = {
   // Web
-  setWebUrl ({ commit }, url, tab) { commit('setWebUrl', url, tab) },
-  setWebTitle ({ commit }, title, tab) { commit('setWebTitle', title, tab) },
-  setWebText ({ commit }, text, tab) { commit('setWebText', text, tab) },
-  setWebview ({ commit }, webview, tab) { commit('setWebview', webview, tab) },
-  setWebCan ({ commit }, can, tab) { commit('setWebCan', can, tab) },
+  setWebUrl ({ commit }, params) { commit('setWebUrl', params) },
+  setWebTitle ({ commit }, params) { commit('setWebTitle', params) },
+  setWebText ({ commit }, params) { commit('setWebText', params) },
+  setWebview ({ commit }, params) { commit('setWebview', params) },
+  setWebCan ({ commit }, params) { commit('setWebCan', params) },
+  setSelectedTab ({ commit }, index) { commit('setSelectedTab', index) },
   addWebTab ({ commit }, number) { commit('addWebTab', number) },
   // Window
   toggleControlVisibility ({ commit }, window) { commit('toggleControlVisibility', window) },
