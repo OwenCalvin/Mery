@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import electron from '../scripts/imports/electron'
   import loop from '../scripts/loop'
   import { mapGetters, mapActions } from 'vuex'
   import { ipcRenderer } from 'electron'
@@ -72,11 +71,6 @@
             forward: false,
             refresh: false
           })
-        })
-
-        // Do not resize window when we enter in fullscreen mode with videos
-        webview.addEventListener('enter-html-full-screen', () => {
-          electron.window.setFullScreen(false)
         })
       })
       loop(this)

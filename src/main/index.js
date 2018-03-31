@@ -26,7 +26,9 @@ function createWindow () {
     transparent: true,
     titleBarStyle: 'hidden',
     minWidth: 525,
-    minHeight: 100
+    minHeight: 100,
+    fullscreenable: false,
+    fullscreen: false
   })
 
   mainWindow.setIgnoreMouseEvents(false, {forward: true})
