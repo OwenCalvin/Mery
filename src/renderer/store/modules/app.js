@@ -31,6 +31,7 @@ const state = {
       forward: false,
       reload: false
     },
+    urlText: URL,
     url: URL,
     webview: null
   }
@@ -62,6 +63,9 @@ const mutations = {
   setWebUrl (state, url) {
     state.web.url = url
   },
+  setWebUrlText (state, url) {
+    state.web.urlText = url
+  },
   setBallRadius (state, radius) {
     state.ball.radius = radius
   },
@@ -82,6 +86,7 @@ const actions = {
   toggleWindowClick ({ commit }, window) { commit('toggleWindowClick', window) },
   setBallPos ({ commit }, newPos) { commit('setBallPos', newPos) },
   setWebUrl ({ commit }, url) { commit('setWebUrl', url) },
+  setWebUrlText ({ commit }, url) { commit('setWebUrlText', url) },
   setBallRadius ({ commit }, radius) { commit('setBallRadius', radius) },
   setWindowOpacity ({ commit }, opacity) { commit('setWindowOpacity', opacity) },
   setWebview ({ commit }, webview) { commit('setWebview', webview) },

@@ -42,12 +42,14 @@
     name: 'top',
     data: function () {
       return {
-        icons: icons,
-        url: null
+        icons: icons
       }
     },
     methods: {
-      ...mapActions(['setWebUrl']),
+      ...mapActions([
+        'setWebUrl',
+        'setWebUrlText'
+      ]),
       closeWindow () { WINDOW.close() },
       minimizeWindow () { WINDOW.minimize() },
       goBack () {
@@ -72,7 +74,11 @@
         'ball',
         'web',
         'control'
-      ])
+      ]),
+      url: {
+        get () { return this.web.urlText },
+        set (val) { this.setWebUrlText(val) }
+      }
     },
     mounted: function () {
       this.url = this.web.url

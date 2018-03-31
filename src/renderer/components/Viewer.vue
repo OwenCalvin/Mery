@@ -16,8 +16,6 @@
   import { mapGetters, mapActions } from 'vuex'
   import { ipcRenderer } from 'electron'
 
-  let webview = document.querySelector('webview')
-
   export default {
     name: 'viewer',
     methods: {
@@ -26,8 +24,18 @@
         'setBallVisibility',
         'setWindowClick',
         'setWebview',
-        'setWebCan'
-      ])
+        'setWebCan',
+        'setWebUrlText'
+      ]),
+      setWebviewControls (webview) {
+        // Set the web controls
+        this.setWebUrlText(webview.getURL())
+        this.setWebCan({
+          back: webview.canGoBack(),
+          forward: webview.canGoForward(),
+          refresh: true
+        })
+      }
     },
     computed: {
       ...mapGetters([
@@ -44,16 +52,15 @@
       }
     },
     mounted: function () {
-      webview = document.querySelector('webview')
+      let webview = document.querySelector('webview')
       webview.addEventListener('dom-ready', () => {
-        this.setWebview(webview)
         ipcRenderer.on('dev', () => { webview.openDevTools() })
 
-        // Set the page actions when, it's ready
-        this.setWebCan({
-          back: webview.canGoBack(),
-          forward: webview.canGoForward(),
-          refresh: true
+        this.setWebview(webview)
+        this.setWebviewControls(webview)
+
+        webview.addEventListener('load-commit', () => {
+          this.setWebviewControls(webview)
         })
 
         // Cannot do actions when the page isn't loaded
