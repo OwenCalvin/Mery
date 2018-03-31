@@ -57,7 +57,7 @@
 
   export default {
     name: 'main-page',
-    data: function () {
+    data () {
       return {
         win: electron.window,
         icons: icons
@@ -88,7 +88,7 @@
         set (val) { this.setWindowOpacity(val) }
       }
     },
-    mounted: function () {
+    mounted () {
       ipcRenderer.on('view', () => { this.toggleControlVisibility(this.win) })
       ipcRenderer.on('mouse', () => { this.toggleWindowClick(this.win) })
       ipcRenderer.on('top', () => { this.toggleWindowTop(this.win) })

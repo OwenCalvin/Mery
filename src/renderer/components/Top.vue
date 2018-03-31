@@ -40,7 +40,7 @@
 
   export default {
     name: 'top',
-    data: function () {
+    data () {
       return {
         icons: icons
       }
