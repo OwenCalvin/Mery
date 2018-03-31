@@ -1,6 +1,7 @@
 const HEIGHT = 40
 const MARGIN = 3
 const URL = 'www.youtube.com'
+const URL_TEST = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
 
 const state = {
   // State of the window
@@ -61,7 +62,10 @@ const mutations = {
     state.ball.pos = newPos
   },
   setWebUrl (state, url) {
-    state.web.url = url
+    let http = 'http://'
+    let cond = url.substring(0, 7) === http || url.substring(0, 8) === 'https://'
+    let httpURL = (cond ? '' : http) + url
+    state.web.url = (URL_TEST.test(httpURL) ? httpURL : 'https://www.google.com/search?q=' + url)
   },
   setWebUrlText (state, url) {
     state.web.urlText = url

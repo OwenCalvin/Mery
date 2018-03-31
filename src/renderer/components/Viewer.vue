@@ -3,7 +3,8 @@
     <div class="mask" :style="{'-webkit-mask-image': getBackground, opacity: window.opacity}">
       <webview
       class="web"
-      :src="'http://' + web.url"
+      :src="web.url"
+      allowfullscreen="0"
       autosize
       allowtransparency>
       </webview>
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+  import electron from '../scripts/imports/electron'
   import loop from '../scripts/loop'
   import { mapGetters, mapActions } from 'vuex'
   import { ipcRenderer } from 'electron'
@@ -70,6 +72,10 @@
             forward: false,
             refresh: false
           })
+        })
+
+        webview.addEventListener('enter-html-full-screen', () => {
+          electron.window.setFullScreen(false)
         })
       })
       loop(this)

@@ -13,7 +13,7 @@
     </span>
     <span class="drag"></span>
     <span class="side input">
-      <input type="text" class="input-text" @keypress.enter="setWebUrl(url)" v-model="url">
+      <input type="text" class="input-text" @focus="selectAll($event)" @keypress.enter="setWebUrl(url)" v-model="url">
     </span>
     <span class="drag"></span>
     <span class="right side">
@@ -50,6 +50,9 @@
         'setWebUrl',
         'setWebUrlText'
       ]),
+      selectAll (event) {
+        event.target.select()
+      },
       closeWindow () { WINDOW.close() },
       minimizeWindow () { WINDOW.minimize() },
       goBack () {
