@@ -1,9 +1,9 @@
 <template>
   <div class="main-page">
     <Top
-    class="control top"
+    class="control"
     v-show="control.visible"
-    :style="{height: getPx(control.height), marginBottom: getPx(control.margin)}">
+    :style="{height: getPx(control.height)}">
     </Top>
 
     <Viewer
@@ -12,9 +12,9 @@
     </Viewer>
 
     <Bottom
-    class="control bottom"
+    class="control"
     v-show="control.visible"
-    :style="{height: getPx(control.height), marginTop: getPx(control.margin)}">
+    :style="{height: getPx(control.height)}">
     </Bottom>
   </div>
 </template>
@@ -42,5 +42,27 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../styles/mainpage.scss';
+  @import '../styles/global.scss';
+  .main-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .control {
+      width: 100%;
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+      background: rgb(50, 50, 50);
+      color: white;
+      opacity: .9;
+      transition: opacity .3s;
+      border-radius: 15px;
+      &:hover {
+          opacity: 1;
+      }
+  }
 </style>

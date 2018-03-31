@@ -71,5 +71,25 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../styles/viewer.scss';
+  @import '../styles/global.scss';
+
+  .viewer {
+      border-radius: 10px;
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+  }
+
+  .mask {
+      transition: opacity .2s;
+      background: white;
+      height: 100%;
+      width: 100%;
+  }
+
+  .web {
+      height: 100%;
+      width: 100%;
+      display: inline-flex;
+  }
 </style>

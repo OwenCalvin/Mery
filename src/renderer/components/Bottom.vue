@@ -101,5 +101,10 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../styles/mainpage.scss';
+  @import '../styles/global.scss';
+
+  .bottom {
+      position: absolute;
+      bottom: 0;
+  }
 </style>

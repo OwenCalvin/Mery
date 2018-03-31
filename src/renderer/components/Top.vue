@@ -18,6 +18,9 @@
     <span class="drag"></span>
     <span class="right side">
       <span class="text-white btn fa">
+        <font-awesome-icon :icon="icons.settings"/>
+      </span>
+      <span class="text-white btn fa">
         <font-awesome-icon :icon="icons.minimize" @click="minimizeWindow"/>
       </span>
       <span class="text-white btn fa">
@@ -81,5 +84,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../styles/mainpage.scss';
+  @import '../styles/global.scss';
 </style>

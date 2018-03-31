@@ -1,0 +1,70 @@
+.drag {
+    background: white;
+    width: 50%;
+    height: 80%;
+    -webkit-app-region: drag;
+    opacity: .1;
+    border-radius: 5px;
+    margin: 0 .5em;
+}
+
+.text-white {
+    color: white;
+}
+
+.side {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    min-width: 9em;
+}
+
+.btn {
+    border-radius: .2em;
+    transition: all .2s;
+    cursor: pointer;
+    &:hover:not(.disable) {
+        transform: scale(1.05);
+        background: rgba($color: white, $alpha: .1)
+    }
+    &:active {
+        transform: scale(.99)
+    }
+}
+
+.active {
+    background: rgba($color: white, $alpha: .2);
+}
+
+.fa {
+    width: 1.2em;
+    padding: .2em;
+    vertical-align: middle;
+    text-align: center;
+    line-height: .9em;
+    font-size: 1.5em;
+    margin: 0 .1em;
+}
+
+.input {
+    font-size: .9em;
+    width: 100%;
+    .input-text {
+        width: 100%;
+        font-size: 1.5em;
+        border: none;
+        background: rgba($color: white, $alpha: .3);
+        color: white;
+        border-radius: 5px;
+        outline: none;
+        padding: .1em .2em;
+        transition: all .2s;
+        &:focus {
+          background: rgba($color: white, $alpha: .35);
+        }
+    }
+}
+
+.disable {
+    opacity: .3;
+}

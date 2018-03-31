@@ -12,6 +12,7 @@ import Reload from '@fortawesome/fontawesome-free-solid/faSync'
 import Dot from '@fortawesome/fontawesome-free-solid/faDotCircle'
 import Opacity from '@fortawesome/fontawesome-free-solid/faAdjust'
 import Windows from '@fortawesome/fontawesome-free-solid/faWindowRestore'
+import Settings from '@fortawesome/fontawesome-free-solid/faCog'
 
 export default {
   eyeSlash: EyeSlash,
@@ -27,5 +28,6 @@ export default {
   unlock: Unlock,
   cross: Cross,
   maximize: Maximize,
-  minimize: Minimize
+  minimize: Minimize,
+  settings: Settings
 }
