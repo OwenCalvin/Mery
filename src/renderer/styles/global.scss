@@ -1,3 +1,10 @@
+@import './fonts.scss';
+@import './animations.scss';
+
+* {
+  font-family: RobotoRegular;
+}
+
 .drag {
     background: white;
     width: 50%;
@@ -10,6 +17,17 @@
 
 .text-white {
     color: white;
+}
+
+.tuto {
+  font-family: RobotoBold;
+  font-size: 1.5em;
+  width: 100%;
+  justify-content: center !important;
+  text-align: center;
+  animation: opacity 1s 1.5s forwards;
+  background: rgba($color: white, $alpha: .95) !important;
+  color: rgb(70, 70, 70) !important;
 }
 
 .side {

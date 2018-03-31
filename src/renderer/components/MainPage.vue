@@ -16,6 +16,13 @@
     v-show="control.visible"
     :style="{height: getPx(control.height)}">
     </Bottom>
+
+    <div
+    class="control tuto"
+    v-show="!control.visible"
+    :style="{height: getPx(control.height)}">
+      CTRL + ALT + X
+    </div>
   </div>
 </template>
 
@@ -60,7 +67,7 @@
       color: white;
       opacity: .9;
       transition: opacity .3s;
-      border-radius: 15px;
+      border-radius: 10px;
       &:hover {
           opacity: 1;
       }
