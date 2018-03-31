@@ -75,9 +75,7 @@
     computed: {
       ...mapGetters([
         'window',
-        'ball',
-        'web',
-        'control'
+        'ball'
       ]),
       radius: {
         get () { return this.ball.radius },

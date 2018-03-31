@@ -1,13 +1,13 @@
 <template>
   <div class="top">
     <span class="left side">
-      <span class="text-white btn fa" :class="{'disable': !web.can.back}" @click="goBack">
+      <span class="text-white btn fa" :class="{'disable': !selectedTab.can.back}" @click="goBack">
         <font-awesome-icon :icon="icons.left"/>
       </span>
-      <span class="text-white btn fa" :class="{'disable': !web.can.forward}" @click="goForward">
+      <span class="text-white btn fa" :class="{'disable': !selectedTab.can.forward}" @click="goForward">
         <font-awesome-icon :icon="icons.right"/>
       </span>
-      <span class="text-white btn fa" :class="{'disable': !web.can.refresh, 'loading': !web.can.refresh}" @click="reload">
+      <span class="text-white btn fa" :class="{'disable': !selectedTab.can.reload, 'loading': !selectedTab.can.reload}" @click="reload">
         <font-awesome-icon :icon="icons.reload"/>
       </span>
     </span>
@@ -18,7 +18,7 @@
       class="input-text"
       @blur="setFocus(false)"
       @focus="setFocus(true, $event)"
-      @keypress.enter="setWebUrl(web.text)"
+      @keypress.enter="setWebUrl(selectedTab.text)"
       v-model="url">
     </span>
     <span class="drag"></span>
@@ -66,18 +66,18 @@
       closeWindow () { WINDOW.close() },
       minimizeWindow () { WINDOW.minimize() },
       goBack () {
-        if (this.web.can.back) {
-          this.web.webview.goBack()
+        if (this.selectedTab.can.back) {
+          this.selectedTab.webview.goBack()
         }
       },
       goForward () {
-        if (this.web.can.forward) {
-          this.web.webview.goForward()
+        if (this.selectedTab.can.forward) {
+          this.selectedTab.webview.goForward()
         }
       },
       reload () {
-        if (this.web.can.refresh) {
-          this.web.webview.reload()
+        if (this.selectedTab.can.reload) {
+          this.selectedTab.webview.reload()
         }
       }
     },
@@ -86,10 +86,11 @@
         'window',
         'ball',
         'web',
-        'control'
+        'control',
+        'selectedTab'
       ]),
       url: {
-        get () { return this.web.text },
+        get () { return this.selectedTab.text },
         set (val) { this.setWebText(val) }
       }
     },

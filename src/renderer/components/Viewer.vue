@@ -3,8 +3,7 @@
     <div class="mask" :style="{'-webkit-mask-image': getBackground, opacity: window.opacity}">
       <webview
       class="web"
-      :src="web.url"
-      allowfullscreen="0"
+      :src="selectedTab.url"
       autosize
       allowtransparency>
       </webview>
@@ -35,7 +34,7 @@
         this.setWebCan({
           back: webview.canGoBack(),
           forward: webview.canGoForward(),
-          refresh: true
+          reload: true
         })
       }
     },
@@ -44,7 +43,8 @@
         'web',
         'control',
         'ball',
-        'window'
+        'window',
+        'selectedTab'
       ]),
       getBackground () {
         // Make a hole with -webkit-mask-image
@@ -70,7 +70,7 @@
           this.setWebCan({
             back: false,
             forward: false,
-            refresh: false
+            reload: false
           })
         })
 
