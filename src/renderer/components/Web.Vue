@@ -72,6 +72,13 @@
         })
 
         webview.addEventListener('new-window', (event) => {
+          let newIndex = this.web.tabs.length
+          this.addWebTab()
+          this.setWebUrl({
+            url: event.url,
+            index: newIndex
+          })
+          this.setSelectedTab = newIndex
         })
       })
     }
