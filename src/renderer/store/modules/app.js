@@ -95,7 +95,11 @@ const mutations = {
     }
     tab.webview.stop()
     state.web.tabs.splice(index, 1)
-    state.web.selectedTab = 0
+    if (state.web.tabs[index]) {
+      state.web.selectedTab = index
+    } else {
+      state.web.selectedTab = index - 1
+    }
   },
   // Window
   toggleControlVisibility (state, window) {
