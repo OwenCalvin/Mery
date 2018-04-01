@@ -3,14 +3,17 @@ const MARGIN = 3
 const URL = 'https://daven.io'
 const URL_TEST = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/
 
-function getNewTab () {
+let tabId = 0
+
+function getNewTab (id) {
   return {
     can: {
       back: false,
       forward: false,
       reload: false
     },
-    title: null,
+    id: id,
+    title: '...',
     text: URL,
     url: URL,
     webview: null
@@ -42,7 +45,7 @@ const state = {
   // State of the Viewer (Browser)
   web: {
     selectedTab: 0,
-    tabs: [ getNewTab() ]
+    tabs: [ getNewTab(tabId) ]
   }
 }
 
@@ -81,7 +84,18 @@ const mutations = {
     }
   },
   addWebTab (state) {
-    state.web.tabs.push(getNewTab())
+    tabId++
+    state.web.tabs.push(getNewTab(tabId))
+    state.web.selectedTab = state.web.tabs.length - 1
+  },
+  deleteWebTab (state, index) {
+    let tab = state.web.tabs[index]
+    if (tab.webview.isDevToolsOpened()) {
+      tab.webview.closeDevTools()
+    }
+    tab.webview.stop()
+    state.web.tabs.splice(index, 1)
+    state.web.selectedTab = 0
   },
   // Window
   toggleControlVisibility (state, window) {
@@ -116,6 +130,7 @@ const actions = {
   setWebCan ({ commit }, params) { commit('setWebCan', params) },
   setSelectedTab ({ commit }, index) { commit('setSelectedTab', index) },
   addWebTab ({ commit }, number) { commit('addWebTab', number) },
+  deleteWebTab ({ commit }, index) { commit('deleteWebTab', index) },
   // Window
   toggleControlVisibility ({ commit }, window) { commit('toggleControlVisibility', window) },
   toggleWindowTop ({ commit }, window) { commit('toggleWindowTop', window) },

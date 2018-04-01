@@ -78,6 +78,7 @@
   }
 
   .control {
+      user-select: none;
       width: 100%;
       position: absolute;
       display: flex;

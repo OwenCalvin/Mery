@@ -18,44 +18,47 @@
       </span>
     </span>
 
-    <span class="drag"></span>
     <span>
-      <select v-model="tabSelection">
-        <option v-for="(tab, index) in web.tabs" :key="index">
-          {{ index }}
-        </option>
-      </select>
-    </span>
-    <span class="drag"></span>
-
-    <span class="side">
-      <vue-slider
-      ref="slider"
-      v-model="radius"
-      :min="0"
-      :max="350"
-      :interval="1"
-      :tooltip="false"
-      width="100%">
-      </vue-slider>
-
-      <span class="text-white fa">
-        <font-awesome-icon :icon="icons.dot"/>
+      <span class="tab" :class="{'selected': index === web.selectedTab}" v-for="(tab, index) in web.tabs" :key="index" :value="index" @click="setSelectedTab(index)">
+        <span class="tab-title">
+          {{ tab.title }}
+        </span>
+        <span v-if="web.tabs.length > 1" class="fa text-white" @click.capture.stop="deleteWebTab(index)">
+          <font-awesome-icon :icon="icons.cross"/>
+        </span>
       </span>
     </span>
 
     <span class="side">
-      <vue-slider
-      ref="slider"
-      v-model="opacity"
-      :min="0.1"
-      :max="1"
-      :interval=".01"
-      :tooltip="false"
-      width="100%">
-      </vue-slider>
-      <span class="text-white fa">
-        <font-awesome-icon :icon="icons.opacity"/>
+      <span class="side">
+        <vue-slider
+        ref="slider"
+        v-model="radius"
+        :min="0"
+        :max="350"
+        :interval="1"
+        :tooltip="false"
+        width="100%">
+        </vue-slider>
+
+        <span class="text-white fa">
+          <font-awesome-icon :icon="icons.dot"/>
+        </span>
+      </span>
+
+      <span class="side">
+        <vue-slider
+        ref="slider"
+        v-model="opacity"
+        :min="0.1"
+        :max="1"
+        :interval=".01"
+        :tooltip="false"
+        width="100%">
+        </vue-slider>
+        <span class="text-white fa">
+          <font-awesome-icon :icon="icons.opacity"/>
+        </span>
       </span>
     </span>
   </div>
@@ -85,7 +88,8 @@
         'setBallRadius',
         'setWindowOpacity',
         'addWebTab',
-        'setSelectedTab'
+        'setSelectedTab',
+        'deleteWebTab'
       ])
     },
     computed: {
@@ -121,6 +125,21 @@
 
 <style lang="scss" scoped>
   @import '../styles/global.scss';
+
+  .selected {
+    background: rgba($color: white, $alpha: .2);
+  }
+
+  .tab {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: .4em;
+    padding: .3em 1em;
+    font-size: 1.2em;
+    height: 100%;
+    cursor: pointer;
+  }
 
   .bottom {
       position: absolute;

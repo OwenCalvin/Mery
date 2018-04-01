@@ -3,7 +3,9 @@
     <div class="mask" :style="{'-webkit-mask-image': getBackground, opacity: window.opacity}">
       <Web
       v-for="(tab, index) in web.tabs"
-      :key="index"
+      v-show="index === web.selectedTab"
+      :id="'viewer' + index"
+      :key="tab.id"
       :index="index">
       </Web>
     </div>

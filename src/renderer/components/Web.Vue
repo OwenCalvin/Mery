@@ -1,9 +1,9 @@
 <template>
-  <div class="web" v-show="index === web.selectedTab">
+  <div class="web">
     <webview
     :id="'web' + index"
-    class="webview"
     :src="this.web.tabs[index].url"
+    class="webview"
     autosize
     allowtransparency>
     </webview>
@@ -23,7 +23,8 @@
         'setWebText',
         'setWebUrl',
         'addWebTab',
-        'setSelectedTab'
+        'setSelectedTab',
+        'setWebTitle'
       ]),
       setVuex (func, params) {
         params.index = this.index
@@ -31,6 +32,7 @@
       },
       setWebviewControls (webview) {
         // Set the web controls
+        this.setVuex(this.setWebTitle, { title: webview.getTitle() })
         this.setVuex(this.setWebText, { text: webview.getURL() })
         this.setVuex(this.setWebCan, {
           can: {
