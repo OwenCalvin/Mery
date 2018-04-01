@@ -13,6 +13,7 @@
 <script>
   import Web from './Web'
   import { mapGetters } from 'vuex'
+  import { ipcRenderer } from 'electron'
 
   export default {
     name: 'viewer',
@@ -20,7 +21,8 @@
       ...mapGetters([
         'web',
         'ball',
-        'window'
+        'window',
+        'selectedTab'
       ]),
       getBackground () {
         // Make a hole with -webkit-mask-image
@@ -28,6 +30,9 @@
           return `radial-gradient(circle at ${this.ball.pos.x}px ${this.ball.pos.y}px, transparent ${this.ball.radius}px, white 0%)`
         }
       }
+    },
+    mounted () {
+      ipcRenderer.on('dev', () => { this.selectedTab.webview.openDevTools() })
     },
     components: { Web }
   }

@@ -12,7 +12,6 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import { ipcRenderer } from 'electron'
 
   export default {
     name: 'web',
@@ -51,7 +50,6 @@
     mounted () {
       let webview = document.querySelector('#web' + this.index)
       webview.addEventListener('dom-ready', () => {
-        ipcRenderer.on('dev', () => { webview.openDevTools() })
         this.setVuex(this.setWebview, { webview: webview })
         this.setWebviewControls(webview)
 
