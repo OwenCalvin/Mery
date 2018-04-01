@@ -18,23 +18,27 @@
       </span>
     </span>
 
-    <span class="tabs" @click.self.prevent="tabs = true" @mouseover="tabs = true" @mouseout="tabs = false">
+    <span class="tabs" @mouseover="tabs = true" @mouseleave="tabs = false">
       <span class="tab selected">
         <span class="tab-title">
           {{ selectedTab.title }}
         </span>
       </span>
       <span class="mouseDetect">
-        <span class="hiddenTabs" v-if="tabs && web.tabs.length > 1">
-          <span :class="{'selected' : index === web.selectedTab}" class="tab" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
-            <span class="tab-title">
-              {{ tab.title }}
-            </span>
-            <span v-if="web.tabs.length > 1" class="text-white" @click.capture.stop="deleteWebTab(index)">
-              <font-awesome-icon :icon="icons.cross"/>
+        <!--  v-if="tabs && web.tabs.length > 1" -->
+        <transition name="scale">
+          <span class="hiddenTabs" v-if="tabs && web.tabs.length > 1">
+            <span :class="{'selected' : index === web.selectedTab}" class="tab" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
+              <span class="tab-title">
+                {{ tab.title }}
+              </span>
+              <span v-if="web.tabs.length > 1" class="text-white" @click.capture.stop="deleteWebTab(index)">
+                <font-awesome-icon :icon="icons.cross"/>
+              </span>
             </span>
           </span>
-        </span>
+        </transition>
+
       </span>
     </span>
 
@@ -144,7 +148,6 @@
     justify-content: center;
     display: flex;
     width: 30%;
-    height: 100%;
     flex-wrap: nowrap;
   }
 
@@ -152,10 +155,14 @@
     width: 30%;
     position: fixed;
     bottom: 0;
+    bottom: 0;
     padding-bottom: 3em;
+    max-height: 80%;
+    overflow: auto;
   }
 
   .hiddenTabs {
+    overflow: auto;
     box-shadow: 0px 6px 37px 3px rgba(0,0,0,0.19);
     background: rgb(70, 70, 70);
     flex-direction: column;

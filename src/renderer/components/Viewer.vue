@@ -1,13 +1,15 @@
 <template>
   <div class="viewer">
     <div class="mask" :style="{'-webkit-mask-image': getBackground, opacity: window.opacity}">
-      <Web
-      v-for="(tab, index) in web.tabs"
-      v-show="index === web.selectedTab"
-      :id="'viewer' + index"
-      :key="tab.id"
-      :index="index">
-      </Web>
+      <transition-group name="side">
+        <Web
+        v-for="(tab, index) in web.tabs"
+        v-show="index === web.selectedTab"
+        :id="'viewer' + index"
+        :key="tab.id"
+        :index="index">
+        </Web>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -39,10 +41,9 @@
     },
     watch: {
       selectedTab () {
-        if (this.selectedTab.webview) {
+        if (this.selectedTab.webview && !this.selectedTab.webview.isLoading()) {
           let size = WINDOW.getSize()
           size[1] -= 2 * this.control.totalHeight
-          console.log(size)
           this.selectedTab.webview.getWebContents().setSize({
             normal: {
               width: size[0],

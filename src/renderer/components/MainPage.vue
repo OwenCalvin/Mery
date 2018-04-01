@@ -1,28 +1,34 @@
 <template>
   <div class="main-page">
-    <Top
-    class="control"
-    v-show="control.visible"
-    :style="{height: getPx(control.height)}">
-    </Top>
+    <transition name="scale">
+      <Top
+      class="control"
+      v-show="control.visible"
+      :style="{height: getPx(control.height)}">
+      </Top>
+    </transition>
 
     <Viewer
     class="viewer"
     :style="{top: getPx(control.totalHeight), bottom: getPx(control.totalHeight)}">
     </Viewer>
 
-    <Bottom
-    class="control"
-    v-show="control.visible"
-    :style="{height: getPx(control.height)}">
-    </Bottom>
+    <transition name="scale">
+      <Bottom
+      class="control"
+      v-show="control.visible"
+      :style="{height: getPx(control.height)}">
+      </Bottom>
+    </transition>
 
-    <div
-    class="control tuto"
-    v-show="!control.visible"
-    :style="{height: getPx(control.height)}">
-      CTRL + ALT + X
-    </div>
+    <transition name="fade">
+      <div
+      class="control tuto"
+      v-show="!control.visible"
+      :style="{height: getPx(control.height)}">
+        CTRL + ALT + X
+      </div>
+    </transition>
   </div>
 </template>
 

@@ -73,6 +73,8 @@
         })
 
         webview.addEventListener('new-window', (event) => {
+          console.log(this.index)
+          console.log(event)
           let newIndex = this.web.tabs.length
           this.addWebTab()
           this.setWebUrl({
