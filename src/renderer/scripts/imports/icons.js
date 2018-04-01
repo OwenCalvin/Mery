@@ -14,10 +14,14 @@ import Opacity from '@fortawesome/fontawesome-free-solid/faAdjust'
 import Windows from '@fortawesome/fontawesome-free-solid/faWindowRestore'
 import Settings from '@fortawesome/fontawesome-free-solid/faCog'
 import Plus from '@fortawesome/fontawesome-free-solid/faPlus'
+import ArrowTop from '@fortawesome/fontawesome-free-solid/faAngleUp'
+import ArrowBottom from '@fortawesome/fontawesome-free-solid/faAngleDown'
 
 export default {
   eyeSlash: EyeSlash,
   eye: Eye,
+  arrowTop: ArrowTop,
+  arrowBottom: ArrowBottom,
   dot: Dot,
   plus: Plus,
   windows: Windows,

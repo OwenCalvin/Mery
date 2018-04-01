@@ -5,7 +5,8 @@
     :src="this.web.tabs[index].url"
     class="webview"
     autosize
-    allowtransparency>
+    allowtransparency
+    nodeintegration>
     </webview>
   </div>
 </template>

@@ -46,9 +46,9 @@
     computed: {
       ...mapGetters([
         'web',
-        'control',
         'ball',
-        'window'
+        'window',
+        'control'
       ])
     },
     mounted () {

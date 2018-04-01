@@ -18,13 +18,22 @@
       </span>
     </span>
 
-    <span>
-      <span class="tab" :class="{'selected': index === web.selectedTab}" v-for="(tab, index) in web.tabs" :key="index" :value="index" @click="setSelectedTab(index)">
+    <span class="tabs" @click.prevent="tabs = true" @mouseover="tabs = true" @mouseout="tabs = false">
+      <span class="tab selected">
         <span class="tab-title">
-          {{ tab.title }}
+          {{ selectedTab.title }}
         </span>
-        <span v-if="web.tabs.length > 1" class="fa text-white" @click.capture.stop="deleteWebTab(index)">
-          <font-awesome-icon :icon="icons.cross"/>
+      </span>
+      <span class="mouseDetect">
+        <span class="hiddenTabs" v-if="tabs && web.tabs.length > 1">
+          <span :class="{'selected' : index === web.selectedTab}" class="tab" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
+            <span class="tab-title">
+              {{ tab.title }}
+            </span>
+            <span v-if="web.tabs.length > 1" class="text-white" @click.capture.stop="deleteWebTab(index)">
+              <font-awesome-icon :icon="icons.cross"/>
+            </span>
+          </span>
         </span>
       </span>
     </span>
@@ -76,6 +85,7 @@
     name: 'main-page',
     data () {
       return {
+        tabs: false,
         win: electron.window,
         icons: icons
       }
@@ -96,7 +106,9 @@
       ...mapGetters([
         'window',
         'ball',
-        'web'
+        'web',
+        'selectedTab',
+        'control'
       ]),
       radius: {
         get () { return this.ball.radius },
@@ -126,23 +138,63 @@
 <style lang="scss" scoped>
   @import '../styles/global.scss';
 
-  .selected {
-    background: rgba($color: white, $alpha: .2);
+  .tabs {
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 30%;
+    height: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .mouseDetect {
+    width: 30%;
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 3em;
+  }
+
+  .hiddenTabs {
+    box-shadow: 0px 6px 37px 3px rgba(0,0,0,0.19);
+    background: rgb(70, 70, 70);
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    padding: .5em 2em;
+    border-radius: .3em;
+    .tab {
+      width: 100%;
+      margin: .3em 0;
+      background: rgba($color: white, $alpha: .05);
+    }
   }
 
   .tab {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    border-radius: .4em;
-    padding: .3em 1em;
     font-size: 1.2em;
-    height: 100%;
+    padding: .3em 1em;
     cursor: pointer;
+    display: flex;
+    width: 60%;
+    border-radius: .4em;
+    .tab-title {
+      width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+    }
+    .tab {
+      border-bottom: 2px solid white;
+    }
+  }
+
+  .selected {
+    background: rgba($color: white, $alpha: .2) !important;
   }
 
   .bottom {
-      position: absolute;
-      bottom: 0;
+    position: absolute;
+    bottom: 0;
   }
 </style>

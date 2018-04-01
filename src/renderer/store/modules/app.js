@@ -89,16 +89,14 @@ const mutations = {
     state.web.selectedTab = state.web.tabs.length - 1
   },
   deleteWebTab (state, index) {
-    let tab = state.web.tabs[index]
-    if (tab.webview.isDevToolsOpened()) {
-      tab.webview.closeDevTools()
-    }
-    tab.webview.stop()
-    state.web.tabs.splice(index, 1)
-    if (state.web.tabs[index]) {
-      state.web.selectedTab = index
-    } else {
-      state.web.selectedTab = index - 1
+    if (state.web.tabs.length > 1) {
+      let tab = state.web.tabs[index]
+      if (tab.webview.isDevToolsOpened()) {
+        tab.webview.closeDevTools()
+      }
+      tab.webview.stop()
+      state.web.tabs.splice(index, 1)
+      state.web.selectedTab = index - (state.web.tabs[index] ? 0 : 1)
     }
   },
   // Window
@@ -143,7 +141,6 @@ const actions = {
   // Ball
   setBallPos ({ commit }, newPos) { commit('setBallPos', newPos) },
   setBallRadius ({ commit }, radius) { commit('setBallRadius', radius) }
-
 }
 
 export default {

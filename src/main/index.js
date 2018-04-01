@@ -25,7 +25,7 @@ function createWindow () {
     frame: false,
     transparent: true,
     titleBarStyle: 'hidden',
-    minWidth: 525,
+    minWidth: 630,
     minHeight: 100,
     fullscreenable: false,
     fullscreen: false
