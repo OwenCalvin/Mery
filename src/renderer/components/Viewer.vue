@@ -13,9 +13,12 @@
 </template>
 
 <script>
+  import electron from '../scripts/imports/electron'
   import Web from './Web'
   import { mapGetters } from 'vuex'
   import { ipcRenderer } from 'electron'
+
+  const WINDOW = electron.window
 
   export default {
     name: 'viewer',
@@ -24,12 +27,28 @@
         'web',
         'ball',
         'window',
-        'selectedTab'
+        'selectedTab',
+        'control'
       ]),
       getBackground () {
         // Make a hole with -webkit-mask-image
         if (!this.window.clickable) {
           return `radial-gradient(circle at ${this.ball.pos.x}px ${this.ball.pos.y}px, transparent ${this.ball.radius}px, white 0%)`
+        }
+      }
+    },
+    watch: {
+      selectedTab () {
+        if (this.selectedTab.webview) {
+          let size = WINDOW.getSize()
+          size[1] -= 2 * this.control.totalHeight
+          console.log(size)
+          this.selectedTab.webview.getWebContents().setSize({
+            normal: {
+              width: size[0],
+              height: size[1]
+            }
+          })
         }
       }
     },

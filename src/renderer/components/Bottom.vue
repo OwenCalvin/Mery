@@ -18,7 +18,7 @@
       </span>
     </span>
 
-    <span class="tabs" @click.prevent="tabs = true" @mouseover="tabs = true" @mouseout="tabs = false">
+    <span class="tabs" @click.self.prevent="tabs = true" @mouseover="tabs = true" @mouseout="tabs = false">
       <span class="tab selected">
         <span class="tab-title">
           {{ selectedTab.title }}

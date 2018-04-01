@@ -52,6 +52,7 @@
     },
     mounted () {
       let webview = document.querySelector('#web' + this.index)
+
       webview.addEventListener('dom-ready', () => {
         this.setVuex(this.setWebview, { webview: webview })
         this.setWebviewControls(webview)
@@ -91,6 +92,6 @@
   .webview {
     height: 100%;
     width: 100%;
-    display: inline-flex;
+    display: inline-flex !important;
   }
 </style>
