@@ -2,7 +2,7 @@
   <div class="main-page">
     <transition name="scale">
       <Top
-      class="control"
+      class="side"
       v-show="control.visible"
       :style="{height: getPx(control.height)}">
       </Top>
@@ -15,7 +15,7 @@
 
     <transition name="scale">
       <Bottom
-      class="control"
+      class="side"
       v-show="control.visible"
       :style="{height: getPx(control.height)}">
       </Bottom>
@@ -23,7 +23,7 @@
 
     <transition name="fade">
       <div
-      class="control tuto"
+      class="tuto"
       v-show="!control.visible"
       :style="{height: getPx(control.height)}">
         CTRL + ALT + X
@@ -77,27 +77,35 @@
   }
 
   .viewer {
-      border-radius: 10px;
-      overflow: hidden;
-      position: absolute;
-      width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
   }
 
-  .control {
-      user-select: none;
-      width: 100%;
+  .side {
+    user-select: none;
+    width: 100%;
+    position: absolute;
+    background: rgb(35, 35, 35);
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    &:before {
+      content: '';
+      top: 50%;
+      left: 50%;
+      bottom: 0;
+      width: 98%;
+      height: 80%;
       position: absolute;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: nowrap;
-      background: rgb(50, 50, 50);
-      color: white;
-      opacity: .9;
-      transition: opacity .3s;
+      transform: translateX(-50%) translateY(-50%);
+      -webkit-app-region: drag;
+    }
+
+    .tuto {
+      pointer-events: none;
       border-radius: 10px;
-      &:hover {
-          opacity: 1;
-      }
+    }
   }
 </style>

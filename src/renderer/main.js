@@ -5,7 +5,10 @@ import router from './router'
 import store from './store'
 import fontawesome from '@fortawesome/fontawesome'
 import solid from '@fortawesome/fontawesome-free-solid/'
+import Buefy from 'buefy'
+import 'buefy/lib/buefy.css'
 
+Vue.use(Buefy)
 fontawesome.library.add(solid)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))

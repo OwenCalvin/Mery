@@ -1,5 +1,5 @@
-const HEIGHT = 40
-const MARGIN = 3
+const HEIGHT = 45
+const MARGIN = 2
 const URL = 'https://daven.io'
 const URL_TEST = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/
 
@@ -89,15 +89,13 @@ const mutations = {
     state.web.selectedTab = state.web.tabs.length - 1
   },
   deleteWebTab (state, index) {
-    if (state.web.tabs.length > 1) {
-      let tab = state.web.tabs[index]
-      if (tab.webview.isDevToolsOpened()) {
-        tab.webview.closeDevTools()
-      }
-      tab.webview.stop()
-      state.web.tabs.splice(index, 1)
-      state.web.selectedTab = index - (state.web.tabs[index] ? 0 : 1)
+    let tab = state.web.tabs[index]
+    if (tab.webview.isDevToolsOpened()) {
+      tab.webview.closeDevTools()
     }
+    tab.webview.stop()
+    state.web.tabs.splice(index, 1)
+    state.web.selectedTab = index - (state.web.tabs[index] ? 0 : 1)
   },
   // Window
   toggleControlVisibility (state, window) {

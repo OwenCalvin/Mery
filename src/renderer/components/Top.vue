@@ -1,38 +1,50 @@
 <template>
   <div class="top">
-    <span class="left side">
-      <span class="text-white btn fa" :class="{'disable': !selectedTab.can.back}" @click="goBack">
-        <font-awesome-icon :icon="icons.left"/>
-      </span>
-      <span class="text-white btn fa" :class="{'disable': !selectedTab.can.forward}" @click="goForward">
-        <font-awesome-icon :icon="icons.right"/>
-      </span>
-      <span class="text-white btn fa" :class="{'disable': !selectedTab.can.reload, 'loading': !selectedTab.can.reload}" @click="reload">
-        <font-awesome-icon :icon="icons.reload"/>
-      </span>
-    </span>
-    <span class="drag"></span>
-    <span class="side input">
-      <input
-      type="text"
-      class="input-text"
-      @blur="setFocus(false)"
-      @focus="setFocus(true, $event)"
-      @keypress.enter="goTo"
-      v-model="url">
-    </span>
-    <span class="drag"></span>
-    <span class="right side">
-      <span class="text-white btn fa">
-        <font-awesome-icon :icon="icons.settings"/>
-      </span>
-      <span class="text-white btn fa">
-        <font-awesome-icon :icon="icons.minimize" @click="minimizeWindow"/>
-      </span>
-      <span class="text-white btn fa">
-        <font-awesome-icon :icon="icons.cross" @click="closeWindow"/>
-      </span>
-    </span>
+    <div class="columns is-gapless control space-around">
+      <div class="column is-2">
+        <div class="columns">
+          <div class="column is-3 btn fa" :class="{'disable': !selectedTab.can.back}" @click="goBack">
+            <font-awesome-icon :icon="icons.left"/>
+          </div>
+          <div class="column is-3 btn fa" :class="{'disable': !selectedTab.can.forward}" @click="goForward">
+            <font-awesome-icon :icon="icons.right"/>
+          </div>
+          <div class="column is-3 text-white btn fa" :class="{'disable': !selectedTab.can.reload, 'loading': !selectedTab.can.reload}" @click="reload">
+            <font-awesome-icon :icon="icons.reload"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-6">
+        <div class="columns is-gapless">
+          <div class="column is-11">
+            <input
+            class="text-normal"
+            type="text"
+            @blur="setFocus(false)"
+            @focus="setFocus(true, $event)"
+            @keypress.enter="goTo"
+            v-model="url"/>
+          </div>
+          <div class="column is-1" @click="addWebTab">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.plus"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-2">
+        <div class="columns end">
+          <div class="column is-3 btn fa">
+            <font-awesome-icon :icon="icons.minimize" @click="minimizeWindow"/>
+          </div>
+          <div class="column is-3 btn fa">
+            <font-awesome-icon :icon="icons.cross" @click="closeWindow"/>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,7 +67,8 @@
     methods: {
       ...mapActions([
         'setWebUrl',
-        'setWebText'
+        'setWebText',
+        'addWebTab'
       ]),
       setFocus (val, event = null) {
         this.focused = val

@@ -1,79 +1,92 @@
 <template>
   <div class="bottom">
-    <span class="side">
-      <span class="text-white btn fa" @click="toggleControlVisibility(win)">
-        <font-awesome-icon :icon="icons.eye"/>
-      </span>
+    <div class="columns control is-gapless">
+      <div class="column is-6 no-drag">
+        <div class="columns">
+          <div class="tabs-scroller column is-12" @mousewheel.prevent="scroll($event)">
+            <transition-group name="remove" tag="div" id="tabs" class="tabs start is-marginless">
+              <div class="tab columns space-around is-gapless is-marginless" :class="{'selected': index === web.selectedTab, 'not-selected': index !== web.selectedTab}" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
+                <div class="column is-9 tab-title">
+                  {{ tab.title }}
+                </div>
+                <div class="column is-3">
+                  <div @click.capture.stop="deleteTab(index)">
+                    <font-awesome-icon :icon="icons.cross"/>
+                  </div>
+                </div>
+              </div>
+            </transition-group>
+            <div id="scrollbar" class="scrollbar"></div>
+          </div>
+        </div>
+      </div>
 
-      <span :class="{'active': window.top}" class="text-white btn fa" @click="toggleWindowTop(win)">
-        <font-awesome-icon :icon="icons.windows"/>
-      </span>
+      <div class="column is-3">
+        <div class="columns">
+          <div class="column is-3" @click="toggleControlVisibility(win)">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.eye"/>
+            </div>
+          </div>
 
-      <span :class="{'active': window.clickable}" class="text-white btn fa" @click="toggleWindowClick(win)">
-        <font-awesome-icon :icon="icons.click"/>
-      </span>
+          <div class="column is-3" @click="toggleWindowTop(win)">
+            <div class="btn fa" :class="{'active': window.top}">
+              <font-awesome-icon :icon="icons.windows"/>
+            </div>
+          </div>
 
-      <span class="text-white btn fa" @click="addWebTab">
-        <font-awesome-icon :icon="icons.plus"/>
-      </span>
-    </span>
+          <div class="column is-3" @click="toggleWindowClick(win)">
+            <div class="btn fa" :class="{'active': window.clickable}">
+              <font-awesome-icon :icon="icons.click"/>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <span class="tabs" @mouseover="tabs = true" @mouseleave="tabs = false">
-      <span class="tab selected">
-        <span class="tab-title">
-          {{ selectedTab.title }}
-        </span>
-      </span>
-      <span class="mouseDetect">
-        <!--  v-if="tabs && web.tabs.length > 1" -->
-        <transition name="scale">
-          <span class="hiddenTabs" v-if="tabs && web.tabs.length > 1">
-            <span :class="{'selected' : index === web.selectedTab}" class="tab" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
-              <span class="tab-title">
-                {{ tab.title }}
-              </span>
-              <span v-if="web.tabs.length > 1" class="text-white" @click.capture.stop="deleteWebTab(index)">
-                <font-awesome-icon :icon="icons.cross"/>
-              </span>
-            </span>
-          </span>
-        </transition>
 
-      </span>
-    </span>
-
-    <span class="side">
-      <span class="side">
-        <vue-slider
-        ref="slider"
-        v-model="radius"
-        :min="0"
-        :max="350"
-        :interval="1"
-        :tooltip="false"
-        width="100%">
-        </vue-slider>
-
-        <span class="text-white fa">
-          <font-awesome-icon :icon="icons.dot"/>
-        </span>
-      </span>
-
-      <span class="side">
-        <vue-slider
-        ref="slider"
-        v-model="opacity"
-        :min="0.1"
-        :max="1"
-        :interval=".01"
-        :tooltip="false"
-        width="100%">
-        </vue-slider>
-        <span class="text-white fa">
-          <font-awesome-icon :icon="icons.opacity"/>
-        </span>
-      </span>
-    </span>
+      <div class="column is-2">
+        <div class="columns">
+          <div class="column is-5">  
+            <div class="columns no-drag">
+              <div class="column is-11">
+                <vue-slider
+                ref="slider"
+                v-model="radius"
+                :min="0"
+                :max="350"
+                :interval="1"
+                :tooltip="false">
+                </vue-slider>
+              </div>
+              <div class="column is-1">
+                <div class="fa">
+                  <font-awesome-icon :icon="icons.dot"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="columns no-drag">
+              <div class="column is-11">
+                <vue-slider
+                ref="slider"
+                v-model="opacity"
+                :min="0.1"
+                :max="1"
+                :interval=".01"
+                :tooltip="false">
+                </vue-slider>
+              </div>
+              <div class="column is-1">
+                <div class="fa">
+                  <font-awesome-icon :icon="icons.opacity"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -84,6 +97,8 @@
   import icons from '../scripts/imports/icons'
   import { mapGetters, mapActions } from 'vuex'
   import { ipcRenderer } from 'electron'
+
+  const SCROLL = 20
 
   export default {
     name: 'main-page',
@@ -98,13 +113,23 @@
       ...mapActions([
         'toggleControlVisibility',
         'toggleWindowClick',
-        'toggleWindowTop',
+        'toggleControlVisibility',
         'setBallRadius',
         'setWindowOpacity',
         'addWebTab',
         'setSelectedTab',
         'deleteWebTab'
-      ])
+      ]),
+      scroll (event) {
+        console.log('test')
+        document.querySelector('#tabs').scrollLeft += event.deltaY > 0 ? SCROLL : -SCROLL
+      },
+      deleteTab (index) {
+        this.deleteWebTab(index)
+        if (this.web.tabs.length <= 0) {
+          this.addWebTab()
+        }
+      }
     },
     computed: {
       ...mapGetters([
@@ -130,7 +155,7 @@
     mounted () {
       ipcRenderer.on('view', () => { this.toggleControlVisibility(this.win) })
       ipcRenderer.on('mouse', () => { this.toggleWindowClick(this.win) })
-      ipcRenderer.on('top', () => { this.toggleWindowTop(this.win) })
+      ipcRenderer.on('top', () => { this.toggleControlVisibility(this.win) })
     },
     components: {
       VueSlider,
@@ -141,67 +166,44 @@
 
 <style lang="scss" scoped>
   @import '../styles/global.scss';
-
   .tabs {
-    height: auto;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    width: 30%;
-    flex-wrap: nowrap;
+    overflow: hidden;
   }
 
-  .mouseDetect {
-    width: 30%;
-    position: fixed;
-    bottom: 0;
-    bottom: 0;
-    padding-bottom: 3em;
-    max-height: 80%;
-    overflow: auto;
-  }
-
-  .hiddenTabs {
-    overflow: auto;
-    box-shadow: 0px 6px 37px 3px rgba(0,0,0,0.19);
-    background: rgb(70, 70, 70);
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    padding: .5em 2em;
-    border-radius: .3em;
-    .tab {
-      width: 100%;
-      margin: .3em 0;
-      background: rgba($color: white, $alpha: .05);
+  .tabs-scroller {
+    position: relative;
+    &:after {
+      content: '';
+      top: 0;
+      right: 0;
+      width: 50px;
+      height: 100%;
+      position: absolute;
+      pointer-events: none;
+      background: linear-gradient(to right, rgba(35,35,35,0) 0%, rgba(35,35,35,.8) 40%, rgba(35,35,35,1) 60%, rgba(35,35,35,1) 100%);
     }
   }
 
   .tab {
+    transition: all .3s;
     font-size: 1.2em;
-    padding: .3em 1em;
+    padding: .5em 1em;
     cursor: pointer;
-    display: flex;
-    width: 60%;
-    border-radius: .4em;
+    min-width: 150px;
     .tab-title {
-      width: 100%;
+      margin-right: .5em;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
       text-align: center;
     }
-    .tab {
-      border-bottom: 2px solid white;
-    }
   }
 
   .selected {
-    background: rgba($color: white, $alpha: .2) !important;
+    background: linear-gradient(135deg, #474747 0%,#606060 100%);
   }
 
   .bottom {
-    position: absolute;
     bottom: 0;
   }
 </style>
