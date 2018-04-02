@@ -200,7 +200,7 @@
   }
 
   .selected {
-    background: linear-gradient(135deg, #474747 0%,#606060 100%);
+    background: linear-gradient(135deg, #3d3d3d 0%,#4b4b4b 100%);
   }
 
   .bottom {
