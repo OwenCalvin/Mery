@@ -64,7 +64,7 @@ const mutations = {
     let http = 'http://'
     let cond = params.url.substring(0, 7) === http || params.url.substring(0, 8) === 'https://'
     let httpURL = (cond ? '' : http) + params.url
-    state.web.tabs[params.index].url = (URL_TEST.test(httpURL) ? httpURL : 'https://www.google.com/search?q=' + params.url)
+    state.web.tabs[params.index].url = cond ? httpURL : ((URL_TEST.test(httpURL) ? httpURL : 'https://www.google.com/search?q=' + params.url))
   },
   setWebTitle (state, params) {
     state.web.tabs[params.index].title = params.title
@@ -90,10 +90,11 @@ const mutations = {
   },
   deleteWebTab (state, index) {
     let tab = state.web.tabs[index]
-    if (tab.webview.isDevToolsOpened()) {
-      tab.webview.closeDevTools()
+    if (tab.webview) {
+      if (tab.webview.isDevToolsOpened()) {
+        tab.webview.closeDevTools()
+      }
     }
-    tab.webview.stop()
     state.web.tabs.splice(index, 1)
     state.web.selectedTab = index - (state.web.tabs[index] ? 0 : 1)
   },

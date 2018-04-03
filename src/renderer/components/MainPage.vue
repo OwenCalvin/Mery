@@ -70,6 +70,7 @@
 
 <style lang="scss" scoped>
   @import '../styles/global.scss';
+
   .main-page {
     position: absolute;
     width: 100%;

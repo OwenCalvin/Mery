@@ -98,7 +98,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import { ipcRenderer } from 'electron'
 
-  const SCROLL = 20
+  const SCROLL = 10
 
   export default {
     name: 'main-page',
@@ -121,8 +121,8 @@
         'deleteWebTab'
       ]),
       scroll (event) {
-        console.log('test')
-        document.querySelector('#tabs').scrollLeft += event.deltaY > 0 ? SCROLL : -SCROLL
+        console.log(event)
+        document.querySelector('#tabs').scrollLeft += (event.deltaY > 0 || event.deltaX > 0) ? SCROLL : -SCROLL
       },
       deleteTab (index) {
         this.deleteWebTab(index)
