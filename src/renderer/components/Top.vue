@@ -3,14 +3,20 @@
     <div class="columns is-gapless control space-around">
       <div class="column is-2">
         <div class="columns">
-          <div class="column is-3 btn fa" :class="{'disable': !selectedTab.can.back}" @click="goBack">
-            <font-awesome-icon :icon="icons.left"/>
+          <div class="column is-3" :class="{'disable': !selectedTab.can.back}" @click="goBack">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.left"/>
+            </div>
           </div>
-          <div class="column is-3 btn fa" :class="{'disable': !selectedTab.can.forward}" @click="goForward">
-            <font-awesome-icon :icon="icons.right"/>
+          <div class="column is-3" :class="{'disable': !selectedTab.can.forward}" @click="goForward">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.right"/>
+            </div>
           </div>
-          <div class="column is-3 text-white btn fa" :class="{'disable': !selectedTab.can.reload, 'loading': !selectedTab.can.reload}" @click="reload">
-            <font-awesome-icon :icon="icons.reload"/>
+          <div class="column is-3" :class="{'disable': !selectedTab.can.reload}" @click="reload">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.reload" :class="{'loading': !selectedTab.can.reload}"/>
+            </div>
           </div>
         </div>
       </div>
@@ -36,11 +42,15 @@
 
       <div class="column is-2">
         <div class="columns end">
-          <div class="column is-3 btn fa">
-            <font-awesome-icon :icon="icons.minimize" @click="minimizeWindow"/>
+          <div class="column is-4">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.minimize" @click="minimizeWindow"/>
+            </div>
           </div>
-          <div class="column is-3 btn fa">
-            <font-awesome-icon :icon="icons.cross" @click="closeWindow"/>
+          <div class="column is-4">
+            <div class="btn fa">
+              <font-awesome-icon :icon="icons.cross" @click="closeWindow"/>
+            </div>
           </div>
         </div>
       </div>
