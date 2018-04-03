@@ -1,7 +1,7 @@
 <template>
   <div class="bottom">
     <div class="columns control is-gapless">
-      <div class="column is-8 no-drag">
+      <div class="column is-8 no-drag tabs-parent">
         <div class="columns">
           <div class="tabs-scroller column is-12" @mousewheel.prevent="scroll($event)">
             <transition-group name="remove" tag="div" id="tabs" class="tabs start is-marginless">
@@ -22,7 +22,7 @@
       </div>
 
       <div class="column is-4">
-        <div class="columns is-gapless end v-center">
+        <div class="columns is-gapless end v-center text-center">
           <div class="column is-2" @click="toggleControlVisibility(win)">
             <div class="btn fa">
               <font-awesome-icon :icon="icons.eye"/>
@@ -41,26 +41,30 @@
             </div>
           </div>
 
-          <div id="radius" class="column is-2 slided" @mouseover="slider($event)">  
+          <div class="column is-2 slided">  
             <div class="slider-parent">
               <div class="fa no-drag">
                 <font-awesome-icon :icon="icons.dot"/>
               </div>
-              <div class="slider">
-                <div class="slider-ball"></div>
-                <div class="slider-bar"></div>
+              <div class="slider-hover">
+                <div class="slider">
+                  <div class="slider-ball"></div>
+                  <div class="slider-bar"></div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div id="opacity" class="column is-2 slided" @mouseover="slider($event)">
+          <div class="column is-2 slided">
             <div class="slider-parent">
               <div class="fa no-drag">
                 <font-awesome-icon :icon="icons.opacity"/>
               </div>
-              <div class="slider">
-                <div class="slider-ball"></div>
-                <div class="slider-bar"></div>
+              <div class="slider-hover">
+                <div class="slider">
+                  <div class="slider-ball"></div>
+                  <div class="slider-bar"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -146,47 +150,58 @@
 
 <style lang="scss" scoped>
   @import '../styles/global.scss';
+
   .tabs {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .tabs-parent {
     overflow: hidden;
   }
 
   .slider-parent {
-    .slider {
-      position: fixed;
-      height: 45px;
-      bottom: 0;
-      width: 2.2em;
-      &:hover {
-        height: 160px;
-        &:after {
-          opacity: 1;
-          transform: none;
-        }
+    position: relative;
+    &:hover {
+      .slider {
+        opacity: 1;
+        transform: scale(1);
       }
-      &:after {
-        opacity: 0;
-        transform: scale(0);
-        transition: all .2s;
-        content: '';
-        position: fixed;
-        z-index: 9999;
-        bottom: 50px;
-        height: 200px;
-        width: 2em;
-        background: rgb(50, 50, 50);
+    }
+    .slider-hover {
+      transition: height .4s;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      .slider {
+        transition: opacity .6s;
         border-radius: 10px;
-        &:hover {
-          height: 100px;
+        top: 0;
+        bottom: 50px;
+        position: absolute;
+        width: 65%;
+        left: 50%;
+        opacity: 0;
+        transform: translateX(-50%);
+        background: rgb(50, 50, 50);
+      }
+      &:hover {
+        height: 250px;
+        .slider {
+          opacity: 1;
         }
       }
     }
   }
 
   .tabs-scroller {
+    overflow: hidden;
     position: relative;
     &:after {
       content: '';
-      top: 0;
+      bottom: 0;
       right: 0;
       width: 50px;
       height: 100%;
@@ -199,7 +214,7 @@
   .tab {
     transition: all .3s;
     font-size: 1.2em;
-    padding: .5em 1em;
+    padding: .4em 1em;
     cursor: pointer;
     min-width: 150px;
     .tab-title {

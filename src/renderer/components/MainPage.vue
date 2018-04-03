@@ -91,7 +91,6 @@
     background: rgb(35, 35, 35);
     color: white;
     border-radius: 8px;
-    overflow: hidden;
     &:before {
       content: '';
       top: 50%;
