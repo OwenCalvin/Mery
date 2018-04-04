@@ -1,5 +1,6 @@
 @import './fonts.scss';
 @import './animations.scss';
+
 .side-enter-active,
 .side-leave-active {
     transition: all .2s;
@@ -56,6 +57,10 @@
 
 * {
     font-family: RobotoThin;
+}
+
+.no-pointer-events {
+    pointer-events: none;
 }
 
 .overflow-hidden {
@@ -130,6 +135,7 @@
 }
 
 .fa {
+    transition: all .2s;
     @extend .text-normal;
 }
 

@@ -8,11 +8,11 @@
               <div class="tab columns space-around is-gapless is-marginless" :class="{'selected': index === web.selectedTab, 'not-selected': index !== web.selectedTab}" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
                 <div class="column is-9 tab-title">
                   <transition name="scale">
-                    <span v-if="tab.title">
-                      {{ tab.title }}
+                    <span v-if="!selectedTab.can.reload && index === web.selectedTab">
+                      <clip-loader :color="'white'" :size="'1em'"></clip-loader>
                     </span>
                     <span v-else>
-                      <clip-loader :color="'white'" :size="'1em'"></clip-loader>
+                      {{ tab.title }}
                     </span>
                   </transition>
                 </div>
@@ -48,59 +48,12 @@
             </div>
           </div>
 
-          <div class="column is-2 slided">  
-            <div class="slider-parent">
-              <div class="fa no-drag">
-                <font-awesome-icon :icon="icons.dot"/>
-              </div>
-              <div class="slider-hover">
-                <div class="slider">
-                  <div class="slider-content">
-                    <vue-slider
-                      ref="slider"
-                      v-model="opacity"
-                      direction="vertical"
-                      height="100%"
-                      width="50%"
-                      :dotSize="15"
-                      :slider-style="{
-                        'box-shadow': '0px 10px 30px -3px rgb(0,0,0)'
-                      }"
-                      :style="{
-                      }"
-                      :bgStyle="{
-                        'background': 'rgba(0, 0, 0, .2)'
-                      }"
-                      :processStyle="{
-                        'background': 'white'
-                      }"
-                      :min=".1"
-                      :max="1"
-                      :interval=".01"
-                      :tooltip="false">
-                      </vue-slider>
-                  </div>
-                  <div class="slider-ball"></div>
-                  <div class="slider-bar"></div>
-                </div>
-              </div>
-            </div>
+          <div class="column is-2">
+            <tooltip-slider :min="0" :max="600" :interval=".1" :get="ball.radius" :set="setBallRadius" :icon="icons.dot"></tooltip-slider>
           </div>
 
-          <div class="column is-2 slided">
-            <div class="slider-parent">
-              <div class="fa no-drag">
-                <font-awesome-icon :icon="icons.opacity"/>
-              </div>
-              <div class="slider-hover">
-                <div class="slider">
-                  <div class="slider-content">
-                    <div class="slider-ball"></div>
-                    <div class="slider-bar"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="column is-2">
+            <tooltip-slider :min=".1" :max="1" :interval=".01" :get="window.opacity" :set="setWindowOpacity" :icon="icons.opacity"></tooltip-slider>
           </div>
         </div>
       </div>
@@ -109,6 +62,7 @@
 </template>
 
 <script>
+  import TooltipSlider from './TooltipSlider'
   import { ClipLoader } from 'vue-spinner/dist/vue-spinner.min.js'
   import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
   import VueSlider from 'vue-slider-component'
@@ -158,14 +112,6 @@
         'selectedTab',
         'control'
       ]),
-      radius: {
-        get () { return this.ball.radius },
-        set (val) { this.setBallRadius(val) }
-      },
-      opacity: {
-        get () { return this.window.opacity },
-        set (val) { this.setWindowOpacity(val) }
-      },
       tabSelection: {
         get () { return this.web.selectedTab },
         set (val) { this.setSelectedTab(val) }
@@ -179,7 +125,8 @@
     components: {
       VueSlider,
       FontAwesomeIcon,
-      ClipLoader
+      ClipLoader,
+      TooltipSlider
     }
   }
 </script>
@@ -194,52 +141,6 @@
 
   .tabs-parent {
     overflow: hidden;
-  }
-
-  .slider-parent {
-    position: relative;
-    &:hover {
-      .slider {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    .slider-hover {
-      transition: transform .2s;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 250px;
-      transform: translateY(200px);
-      .slider {
-        box-shadow: 0px 11px 61px -8px rgba(0,0,0,0.33);
-        transition: all .4s;
-        border-radius: 10px;
-        top: 0;
-        bottom: 50px;
-        position: absolute;
-        width: 65%;
-        left: 50%;
-        opacity: 0;
-        transform: translateX(-50%) scale(0);
-        background: linear-gradient(to top, #2b2b2b 0%,#4c4c4c 100%);
-        padding: 1.5em 0;
-        .slider-content {
-          display: inline-block;
-          position: relative;
-          height: 100%;
-          width: 100%;
-        }
-      }
-      &:hover, &:active, &:focus {
-        transform: none;
-        .slider {
-          transform: translateX(-50%) scale(1);
-          opacity: 1;
-        }
-      }
-    }
   }
 
   .tabs-scroller {
