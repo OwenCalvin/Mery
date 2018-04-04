@@ -7,7 +7,14 @@
             <transition-group name="remove" tag="div" id="tabs" class="tabs start is-marginless">
               <div class="tab columns space-around is-gapless is-marginless" :class="{'selected': index === web.selectedTab, 'not-selected': index !== web.selectedTab}" v-for="(tab, index) in web.tabs" :key="tab.id" :value="index" @click="setSelectedTab(index)">
                 <div class="column is-9 tab-title">
-                  {{ tab.title }}
+                  <transition name="scale">
+                    <span v-if="tab.title">
+                      {{ tab.title }}
+                    </span>
+                    <span v-else>
+                      <clip-loader :color="'white'" :size="'1em'"></clip-loader>
+                    </span>
+                  </transition>
                 </div>
                 <div class="column is-3">
                   <div @click.capture.stop="deleteTab(index)">
@@ -48,6 +55,16 @@
               </div>
               <div class="slider-hover">
                 <div class="slider">
+                   <vue-slider
+                    ref="slider"
+                    v-model="radius"
+                    direction="vertical"
+                    height="100%"
+                    :min=".1"
+                    :max="1"
+                    :interval=".01"
+                    :tooltip="false">
+                    </vue-slider>
                   <div class="slider-ball"></div>
                   <div class="slider-bar"></div>
                 </div>
@@ -62,8 +79,10 @@
               </div>
               <div class="slider-hover">
                 <div class="slider">
-                  <div class="slider-ball"></div>
-                  <div class="slider-bar"></div>
+                  <div class="slider-content">
+                    <div class="slider-ball"></div>
+                    <div class="slider-bar"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,6 +94,7 @@
 </template>
 
 <script>
+  import { ClipLoader } from 'vue-spinner/dist/vue-spinner.min.js'
   import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
   import VueSlider from 'vue-slider-component'
   import electron from '../scripts/imports/electron'
@@ -143,7 +163,8 @@
     },
     components: {
       VueSlider,
-      FontAwesomeIcon
+      FontAwesomeIcon,
+      ClipLoader
     }
   }
 </script>
@@ -187,9 +208,22 @@
         left: 50%;
         opacity: 0;
         transform: translateX(-50%) scale(0);
-        background: linear-gradient(to top, #2b2b2b 0%,#4c4c4c 100%);;
+        background: linear-gradient(to top, #2b2b2b 0%,#4c4c4c 100%);
+        padding: 1.5em 0;
+        .slider-content {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          .slider-ball {
+            width: 1em;
+            height: 1em;
+            background: white;
+            border-radius: 1em;
+          }
+        }
       }
-      &:hover {
+      &:hover, &:active, &:focus {
         transform: none;
         .slider {
           transform: translateX(-50%) scale(1);

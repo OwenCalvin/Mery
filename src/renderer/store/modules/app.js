@@ -13,7 +13,7 @@ function getNewTab (id) {
       reload: false
     },
     id: id,
-    title: '...',
+    title: null,
     text: URL,
     url: URL,
     webview: null
