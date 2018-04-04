@@ -31,9 +31,9 @@
         params.index = this.index
         func(params)
       },
-      setWebviewControls (webview) {
+      setWebviewControls (webview, loading = false) {
         // Set the web controls
-        this.setVuex(this.setWebTitle, { title: webview.getTitle() })
+        this.setVuex(this.setWebTitle, { title: loading ? null : webview.getTitle() })
         this.setVuex(this.setWebText, { text: webview.getURL() })
         this.setVuex(this.setWebCan, {
           can: {
@@ -58,7 +58,7 @@
         this.setWebviewControls(webview)
 
         webview.addEventListener('load-commit', () => {
-          this.setWebviewControls(webview)
+          this.setWebviewControls(webview, true)
         })
 
         // Cannot do actions when the page isn't loaded
@@ -73,8 +73,6 @@
         })
 
         webview.addEventListener('new-window', (event) => {
-          console.log(this.index)
-          console.log(event)
           let newIndex = this.web.tabs.length
           this.addWebTab()
           this.setWebUrl({
