@@ -169,14 +169,16 @@
       }
     }
     .slider-hover {
-      transition: height .4s;
+      transition: transform .2s;
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 60px;
+      height: 250px;
+      transform: translateY(200px);
       .slider {
-        transition: opacity .6s;
+        box-shadow: 0px 11px 61px -8px rgba(0,0,0,0.33);
+        transition: all .4s;
         border-radius: 10px;
         top: 0;
         bottom: 50px;
@@ -184,12 +186,13 @@
         width: 65%;
         left: 50%;
         opacity: 0;
-        transform: translateX(-50%);
-        background: rgb(50, 50, 50);
+        transform: translateX(-50%) scale(0);
+        background: linear-gradient(to top, #2b2b2b 0%,#4c4c4c 100%);;
       }
       &:hover {
-        height: 250px;
+        transform: none;
         .slider {
+          transform: translateX(-50%) scale(1);
           opacity: 1;
         }
       }
