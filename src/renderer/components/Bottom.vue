@@ -30,6 +30,14 @@
 
       <div class="column is-4">
         <div class="columns is-gapless end v-center text-center">
+          <div class="column is-2">
+            <tooltip-slider :min="0" :max="600" :interval=".1" :get="ball.radius" :set="setBallRadius" :icon="icons.dot"></tooltip-slider>
+          </div>
+
+          <div class="column is-2">
+            <tooltip-slider :min=".1" :max="1" :interval=".01" :get="window.opacity" :set="setWindowOpacity" :icon="icons.opacity"></tooltip-slider>
+          </div>
+
           <div class="column is-2" @click="toggleControlVisibility(win)">
             <div class="btn fa">
               <font-awesome-icon :icon="icons.eye"/>
@@ -46,14 +54,6 @@
             <div class="btn fa" :class="{'active': window.clickable}">
               <font-awesome-icon :icon="icons.click"/>
             </div>
-          </div>
-
-          <div class="column is-2">
-            <tooltip-slider :min="0" :max="600" :interval=".1" :get="ball.radius" :set="setBallRadius" :icon="icons.dot"></tooltip-slider>
-          </div>
-
-          <div class="column is-2">
-            <tooltip-slider :min=".1" :max="1" :interval=".01" :get="window.opacity" :set="setWindowOpacity" :icon="icons.opacity"></tooltip-slider>
           </div>
         </div>
       </div>

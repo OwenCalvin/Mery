@@ -79,6 +79,8 @@
       left: 0;
       width: 60px;
       height: 250px;
+      left: 50%;
+      transform: translateX(-50%);
       pointer-events: none;
       .slider {
         box-shadow: 0px 11px 61px -8px rgba(0, 0, 0, .45);
