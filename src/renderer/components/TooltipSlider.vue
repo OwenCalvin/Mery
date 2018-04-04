@@ -77,7 +77,7 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 100%;
+      width: 60px;
       height: 250px;
       pointer-events: none;
       .slider {
