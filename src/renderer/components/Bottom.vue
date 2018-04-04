@@ -55,16 +55,31 @@
               </div>
               <div class="slider-hover">
                 <div class="slider">
-                   <vue-slider
-                    ref="slider"
-                    v-model="radius"
-                    direction="vertical"
-                    height="100%"
-                    :min=".1"
-                    :max="1"
-                    :interval=".01"
-                    :tooltip="false">
-                    </vue-slider>
+                  <div class="slider-content">
+                    <vue-slider
+                      ref="slider"
+                      v-model="opacity"
+                      direction="vertical"
+                      height="100%"
+                      width="50%"
+                      :dotSize="15"
+                      :slider-style="{
+                        'box-shadow': '0px 10px 30px -3px rgb(0,0,0)'
+                      }"
+                      :style="{
+                      }"
+                      :bgStyle="{
+                        'background': 'rgba(0, 0, 0, .2)'
+                      }"
+                      :processStyle="{
+                        'background': 'white'
+                      }"
+                      :min=".1"
+                      :max="1"
+                      :interval=".01"
+                      :tooltip="false">
+                      </vue-slider>
+                  </div>
                   <div class="slider-ball"></div>
                   <div class="slider-bar"></div>
                 </div>
@@ -211,16 +226,10 @@
         background: linear-gradient(to top, #2b2b2b 0%,#4c4c4c 100%);
         padding: 1.5em 0;
         .slider-content {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          .slider-ball {
-            width: 1em;
-            height: 1em;
-            background: white;
-            border-radius: 1em;
-          }
+          display: inline-block;
+          position: relative;
+          height: 100%;
+          width: 100%;
         }
       }
       &:hover, &:active, &:focus {
